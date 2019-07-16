@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
+const passport = require('passport');
 
 //bring in midllewares
 const raw = require('../../middlewares/route.async.wrapper');
@@ -86,10 +87,22 @@ router.post('/login', raw(async (req, res) => {
     // return the information including token as JSON
     return res.status(200).json({
         auth: true,
-        token
+        token: `Bearer ${token}`
     })
 
 
 }));
+
+// @route  GET api/users/current
+// @desc   get current user
+// @acces  Private
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    //to get the user data now with passport auth we can get it in req.user
+    res.json({
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email
+    })
+});
 
 module.exports = router;
