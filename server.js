@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./db/mongoose.connection');
+const bodyParser = require('body-parser');
 
 // REQUIRE ROUTE FILES
 const users = require('./routes/api/users');
@@ -8,6 +9,10 @@ const posts = require('./routes/api/posts');
 
 const PORT = process.env.port || 5000;
 const app = express();
+
+//body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.send('HomePage');
