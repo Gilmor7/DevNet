@@ -65,7 +65,8 @@ router.post('/register', raw(async (req, res) => {
 
     } else res.status(400).json({
         ...false_response,
-        msg: result.error.details[0].message
+        msg: result.error.details[0].message,
+        isJoi: true
     });
 
 }));
@@ -88,7 +89,8 @@ router.post('/login', raw(async (req, res) => {
         if (!user) {
             return res.status(404).json({
                 ...false_response,
-                msg: 'Email is not exist'
+                email: 'Email is not exist',
+                msg: 'User loged out'
             })
         }
 
@@ -97,7 +99,8 @@ router.post('/login', raw(async (req, res) => {
         if (!result) {
             return res.status(400).json({
                 ...false_response,
-                msg: 'Password is incorrect'
+                password: 'Password is incorrect',
+                msg: 'User loged out'
             })
         }
 
@@ -116,14 +119,15 @@ router.post('/login', raw(async (req, res) => {
         })
     } else res.status(400).json({
         ...false_response,
-        msg: result.error.details[0].message
+        msg: result.error.details[0].message,
+        isJoi: true
     });
 
 
 }));
 
 // @route  GET api/users/current
-// @desc   get current user
+// @desc   get current user  (for test)
 // @acces  Private
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
     //to get the user data now with passport auth we can get it in req.user

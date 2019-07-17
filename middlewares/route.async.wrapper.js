@@ -2,7 +2,7 @@
 const raw = fn =>
     (req, res, next) => {
         Promise.resolve(fn(req, res, next))  //promise resolve is neccessary for fn that is not async because it not return promise 
-            .catch(err => next(err))
+            .catch(err => console.log(err))
     };
 
 module.exports = raw;

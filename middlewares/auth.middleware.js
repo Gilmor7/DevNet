@@ -14,12 +14,8 @@ const tokenize = (payload) => {
     });
 }
 
-const verify_token = async (req, res, next) => {
-
-}
 
 module.exports = {
     false_response,
-    tokenize,
-    verify_token
+    tokenize
 }
