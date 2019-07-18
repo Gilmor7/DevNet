@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ProfileSchema = new mongoose.Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users'  //connect this field to the users collection on DB
     },
     handle: {
         type: String,

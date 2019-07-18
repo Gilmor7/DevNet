@@ -7,13 +7,14 @@ const Joi = require('@hapi/joi');
 
 //bring in midllewares
 const raw = require('../../middlewares/route.async.wrapper');
-const { false_response, tokenize } = require('../../middlewares/auth.middleware')
+const { false_response, tokenize } = require('../../middlewares/auth.middleware');
 
 // getting the user model for communication with DB
 const User = require('../../models/User');
 
-// bring in validation schemas
-const { registerSchema, loginSchema } = require('../../validation/user.validations')
+// bring in validation schemas and functions
+const { registerSchema, loginSchema } = require('../../validation/user.validations');
+const createJoiErrObj = require('../../validation/validation.errors.handle');
 
 // @route  GET api/users/test
 // @desc   Tests users route
@@ -32,7 +33,7 @@ router.post('/register', raw(async (req, res) => {
         name: req.body.name.split(' ').join("")
     },
         registerSchema,
-        // { abortEarly: false }
+        { abortEarly: false }
     );
 
     if (result.error === null) {
@@ -63,11 +64,7 @@ router.post('/register', raw(async (req, res) => {
             res.json(createdUser);
         }
 
-    } else res.status(400).json({
-        ...false_response,
-        msg: result.error.details[0].message,
-        isJoi: true
-    });
+    } else res.status(400).json(createJoiErrObj(result));
 
 }));
 
@@ -119,8 +116,7 @@ router.post('/login', raw(async (req, res) => {
         })
     } else res.status(400).json({
         ...false_response,
-        msg: result.error.details[0].message,
-        isJoi: true
+        ...createJoiErrObj(result)
     });
 
 

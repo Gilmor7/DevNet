@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./db/mongoose.connection');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const { error_handler, not_found } = require('./middlewares/error.handler');
 
 
 // REQUIRE ROUTE FILES
@@ -26,6 +27,12 @@ require('./config/passport')(passport)
 app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+
+// central error handling
+app.use(error_handler);
+
+//when no routes were matched...
+app.use('*', not_found);
 
 // INITIALIZE SERVER AND DATABASE
 const init = async () => {

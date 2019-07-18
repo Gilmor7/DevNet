@@ -5,14 +5,14 @@ const Joi = require('@hapi/joi');
 
 //bring in midllewares
 const raw = require('../../middlewares/route.async.wrapper');
-const { false_response } = require('../../middlewares/auth.middleware');
 
 // getting the models for communication with DB
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 
-// bring in validation schemas
-const { profileFieldsVal } = require('../../validation/profile.validation')
+// bring in validation schemas and functions
+const { profileFieldsVal } = require('../../validation/profile.validation');
+const createJoiErrObj = require('../../validation/validation.errors.handle');
 
 // @route  GET api/profile/test
 // @desc   Tests profile route
@@ -25,7 +25,9 @@ router.get('/test', (req, res) => {
 // @desc   get the current user's profile
 // @acces  Private
 router.get('/', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile
+        .findOne({ user: req.user.id })
+        .populate('user', ['name', 'avatar']);
     const err = {};
     // check if profile exist 
     if (!profile) {
@@ -36,11 +38,66 @@ router.get('/', passport.authenticate('jwt', { session: false }), raw(async (req
 }));
 
 
+// @route  GET api/profile/all
+// @desc   get all profiles array
+// @acces  Public
+router.get('/all', raw(async (req, res) => {
+
+    const errors = {};
+    const profiles = await Profile
+        .find()
+        .populate('user', ['name', 'avatar']);
+
+    if (!profiles) {
+        errors.noProfile = "There are no profiles";
+        return res.status(404).json(errors);
+    }
+    res.json(profiles)
+}));
+
+
+// @route  GET api/profile/handle/:handle
+// @desc   get profile by handle
+// @acces  Public
+router.get('/handle/:handle', raw(async (req, res) => {
+    const profile = await Profile
+        .findOne({ handle: req.params.handle })
+        .populate('user', ['name', 'avatar']);
+
+    const err = {};
+    //check if profile 
+    if (!profile) {
+        err.noProfile = "There is not such profile";
+        res.status(404).json(err);
+    }
+
+    res.json(profile);
+}));
+
+
+// @route  GET api/profile/user/:user_id
+// @desc   get profile by user id
+// @acces  Public
+router.get('/user/:user_id', raw(async (req, res) => {
+    const profile = await Profile
+        .findOne({ user: req.params.user_id })
+        .populate('user', ['name', 'avatar']);
+
+    const err = {};
+    //check if profile 
+    if (!profile) {
+        err.noProfile = "There is not such profile";
+        res.status(404).json(err);
+    }
+
+    res.json(profile);
+}));
+
+
 // @route  POST api/profile
 // @desc   create or update a profile
 // @acces  Private
 router.post('/', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
-    const errors = {};
 
     //check for data validation
     const result = Joi.validate(req.body, profileFieldsVal, { abortEarly: false });
@@ -94,16 +151,9 @@ router.post('/', passport.authenticate('jwt', { session: false }), raw(async (re
 
         }
     } else {
-        errors.msg = {};
-        errors.isJoi = true;
-        result.error.details.forEach(item => errors.msg[item.path[0]] = item.message);
-        res.status(400).json(errors);
+        res.status(400).json(createJoiErrObj(result));
     }
-
-
-
 }));
-
 
 
 module.exports = router;
