@@ -12,6 +12,8 @@ const Profile = require('../../models/Profile');
 
 // bring in validation schemas and functions
 const { profileFieldsVal } = require('../../validation/profile.validation');
+const { educationSchema } = require('../../validation/education.validation');
+const { experienceSchema } = require('../../validation/experience.validation');
 const createJoiErrObj = require('../../validation/validation.errors.handle');
 
 // @route  GET api/profile/test
@@ -141,6 +143,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), raw(async (re
             //check if handle exist 
             const isHandle = await Profile.findOne({ handle: profileFields.handle });
             if (isHandle) {
+                const errors = {};
                 errors.handle = "that handle is already exist";
                 res.status(400).json(errors);
             } else {
@@ -155,5 +158,114 @@ router.post('/', passport.authenticate('jwt', { session: false }), raw(async (re
     }
 }));
 
+
+// @route  POST api/profile/education
+// @desc   add education to profile
+// @acces  Private
+router.post('/education', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
+    //check for validation
+    const result = Joi.validate(req.body, educationSchema, { abortEarly: false });
+
+    //check for validation errors
+    if (result.error === null) {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        //check if profile exist
+        if (!profile) {
+            return res.status(404).json({ noProfile: 'There is not profile for this user' });
+        }
+
+        //add to education array
+        profile.education.unshift(req.body);
+
+        const updatedProfile = await profile.save();
+        res.json(updatedProfile);
+    }
+    else res.status(400).json(createJoiErrObj(result));
+
+}));
+
+
+// @route  Delete api/profile/education/:ed
+// @desc   add education to profile
+// @acces  Private
+router.delete('/education/:edu_id', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // get remove index
+    const removeIndex = profile.education
+        .map(item => item.id)
+        .indexOf(req.params.edu_id);
+
+    //remove the chosen index
+    profile.education.splice(removeIndex, 1);
+
+    //save profile
+    const updatedProfile = await profile.save();
+
+    res.json(updatedProfile);
+
+}));
+
+
+// @route  POST api/profile/experience
+// @desc   add experience to profile
+// @acces  Private
+router.post('/experience', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
+    //check for validation
+    const result = Joi.validate(req.body, experienceSchema, { abortEarly: false });
+
+    //check for validation errors
+    if (result.error === null) {
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        //check if profile exist
+        if (!profile) {
+            return res.status(404).json({ noProfile: 'There is not profile for this user' });
+        }
+
+        //add to education array
+        profile.experience.unshift(req.body);
+
+        const updatedProfile = await profile.save();
+        res.json(updatedProfile);
+    }
+    else res.status(400).json(createJoiErrObj(result));
+}));
+
+
+// @route  Delete api/profile/experience/:exp_id
+// @desc   delete experience from profile
+// @acces  Private
+router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    // get remove index
+    const removeIndex = profile.experience
+        .map(item => item.id)
+        .indexOf(req.params.exp_id);
+
+    //remove the chosen index
+    profile.experience.splice(removeIndex, 1);
+
+    //save profile
+    const updatedProfile = await profile.save();
+
+    res.json(updatedProfile);
+
+}));
+
+
+
+// @route  Delete api/profile/
+// @desc   delete user and profile
+// @acces  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), raw(async (req, res) => {
+    await Profile.findOneAndRemove({ user: req.user.id });
+    await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ succes: 'The user successfully deleted' })
+
+}));
 
 module.exports = router;
