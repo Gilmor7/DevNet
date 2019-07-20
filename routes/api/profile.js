@@ -230,7 +230,8 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), raw
         const updatedProfile = await profile.save();
         res.json(updatedProfile);
     }
-    else res.status(400).json(createJoiErrObj(result));
+    else res.status(400).json( 
+        createJoiErrObj(result));
 }));
 
 

@@ -4,11 +4,7 @@ const error_handler = (err, req, res, next) => {
     console.log(err);
     if (err.model) {
         //DB error
-        const errors = {};
-        //clean the message for clearer error response
-        const errType = err.message.substring(err.message.indexOf("model") + 7, err.message.length - 1);
-        errors[errType] = `${errType} is not found`;
-        res.status(404).json(errors);
+        res.status(404).json({ msg: 'Not found' });
     }
     else res.status(500).json({ status: 'internal server error...' });
 
