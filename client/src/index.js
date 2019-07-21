@@ -1,18 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NavBar from './components/layout/NavBar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 function App() {
   return (
-    <Container>
-      <NavBar />
-      <Landing />
-      <Footer />
-    </Container>
+    <Router>
+      <Container>
+        <NavBar />
+        <Route path="/" exact component={Landing} />
+        <div className="container">
+          <Route path="/Login" exact component={Login} />
+          <Route path="/Register" exact component={Register} />
+        </div>
+        <Footer />
+      </Container>
+    </Router>
   );
 }
 
