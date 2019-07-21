@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('./db/mongoose.connection');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
+
 const { error_handler, not_found } = require('./middlewares/error.handler');
 
 
@@ -12,6 +14,9 @@ const posts = require('./routes/api/posts');
 
 const PORT = process.env.port || 5000;
 const app = express();
+
+// add CORS support to my server
+app.use(cors());
 
 //body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));

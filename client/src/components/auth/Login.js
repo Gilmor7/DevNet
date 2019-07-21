@@ -23,13 +23,19 @@ function Login() {
                                 <input
                                     value={email}
                                     onChange={on_change}
-                                    type="email" className="form-control form-control-lg" placeholder="Email Address" name="email" />
+                                    type="email"
+                                    className="form-control form-control-lg"
+                                    placeholder="Email Address"
+                                    name="email" />
                             </div>
                             <div className="form-group">
                                 <input
                                     value={password}
                                     onChange={on_change}
-                                    type="password" className="form-control form-control-lg" placeholder="Password" name="password" />
+                                    type="password"
+                                    className="form-control form-control-lg"
+                                    placeholder="Password"
+                                    name="password" />
                             </div>
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>

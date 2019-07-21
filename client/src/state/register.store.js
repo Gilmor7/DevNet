@@ -1,4 +1,5 @@
 import React, { useState, createContext } from "react";
+import { registerUser } from '../services/authService';
 
 const RegisterStore = createContext();
 const { Provider } = RegisterStore;
@@ -28,7 +29,14 @@ const RegisterProvider = ({ children }) => {
         const newUser = {
             ...fields
         }
-        console.log(newUser);
+
+        registerUser(newUser)
+            .catch(err => {
+                console.log(err.response.data)
+                set_errors({ ...err.response.data });
+
+            })
+
     }
 
     const state = {

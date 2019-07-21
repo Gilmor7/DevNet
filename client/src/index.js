@@ -2,12 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import NavBar from './components/layout/NavBar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+
+axios.defaults.baseURL = "http://localhost:5000";
+
 
 function App() {
   return (

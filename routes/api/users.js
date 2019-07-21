@@ -39,7 +39,7 @@ router.post('/register', raw(async (req, res) => {
     if (result.error === null) {
         const userExist = await User.findOne({ email: req.body.email })
         if (userExist) {
-            return res.status(400).json({ email: 'email already exist' });
+            return res.status(400).json({ email: 'Email already exist' });
         } else {
             // get the user avatar by email with gravatar
             const avatar = gravatar.url(req.body.email, {
