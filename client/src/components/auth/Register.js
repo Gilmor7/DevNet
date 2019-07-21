@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { RegisterProvider, RegisterStore } from '../../state/register.store'
+import { RegisterProvider, RegisterStore } from '../../state/Register.store';
 
 function Register() {
 
