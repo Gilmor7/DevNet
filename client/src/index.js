@@ -1,74 +1,60 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import styled from 'styled-components';
+import jwt_decode from 'jwt-decode';
+import { setAuthToken } from './services/authService';
+
 import axios from 'axios';
+
+// import { AuthContextProvider } from './state/Auth.Context';
+import { AuthContextProvider, AuthContext } from './state/GlobalAuthContext';
 
 import NavBar from './components/layout/NavBar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
+import Profiles from './components/layout/Profiles';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+
+import './styles.css';
 
 axios.defaults.baseURL = "http://localhost:5000";
 
 
+const withAuth = ({ children }) => {
+  const { set_current_user } = useContext(AuthContext);
+
+  //check for token
+  if (localStorage.jwtToken) {
+    // set auth token header auth
+    setAuthToken(localStorage.jwtToken);
+    //decode token and get user info and exp
+    const decoded = jwt_decode(localStorage.jwtToken);
+    // set user and isAuth 
+    set_current_user(decoded);
+  }
+
+  return children;
+}
+
 function App() {
+
   return (
     <Router>
-      <Container>
+      <AuthContextProvider>
         <NavBar />
         <Route path="/" exact component={Landing} />
         <div className="container">
           <Route path="/Login" exact component={Login} />
           <Route path="/Register" exact component={Register} />
+          <Route path="/profiles" exact component={Profiles} />
         </div>
         <Footer />
-      </Container>
+      </AuthContextProvider>
     </Router>
   );
 }
 
-const Container = styled.div`
-.landing {
-  position: relative;
-  background: url('./img/showcase.jpg') no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  margin-top: -24px;
-  margin-bottom: -50px;
-}
-
-.landing-inner {
-  padding-top: 80px;
-}
-
-.dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.card-form {
-  opacity: 0.9;
-}
-
-.latest-profiles-img {
-  width: 40px;
-  height: 40px;
-}
-
-.form-control::placeholder {
-  color: #bbb !important;
-}
-img{
-  width:100%;
-}
-`;
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(withAuth(App), rootElement);

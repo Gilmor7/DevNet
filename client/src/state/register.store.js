@@ -23,7 +23,7 @@ const RegisterProvider = ({ children }) => {
         })
     }
 
-    const on_submit = e => {
+    const on_submit = (history, e) => {
         e.preventDefault();
 
         const newUser = {
@@ -31,10 +31,10 @@ const RegisterProvider = ({ children }) => {
         }
 
         registerUser(newUser)
+            .then(res => history.push('/login'))
             .catch(err => {
                 console.log(err.response.data)
                 set_errors({ ...err.response.data });
-
             })
 
     }

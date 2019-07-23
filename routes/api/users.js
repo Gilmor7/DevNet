@@ -29,8 +29,7 @@ router.get('/test', (req, res) => {
 router.post('/register', raw(async (req, res) => {
     //checking for data validation
     const result = Joi.validate({
-        ...req.body,
-        name: req.body.name.split(' ').join("")
+        ...req.body
     },
         registerSchema,
         { abortEarly: false }
@@ -75,19 +74,24 @@ router.post('/login', raw(async (req, res) => {
 
     //checking for data validation
     const result = Joi.validate(req.body, loginSchema,
-        // { abortEarly: false }
+        { abortEarly: false }
     );
 
     if (result.error === null) {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
+        // const false_response = {
+        //     auth: false,
+        //     token: null,
+        //     msg: 'Token is not valid'
+        // }
+
         //check if user email does not exist
         if (!user) {
             return res.status(404).json({
                 ...false_response,
-                email: 'Email is not exist',
-                msg: 'User loged out'
+                email: 'Email does not exist',
             })
         }
 
@@ -97,7 +101,6 @@ router.post('/login', raw(async (req, res) => {
             return res.status(400).json({
                 ...false_response,
                 password: 'Password is incorrect',
-                msg: 'User loged out'
             })
         }
 

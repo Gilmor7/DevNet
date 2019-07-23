@@ -1,8 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classnames from 'classnames'
-import { RegisterProvider, RegisterStore } from '../../state/Register.store';
 
-function Register() {
+import { RegisterProvider, RegisterStore } from '../../state/Register.store';
+// import { AuthContext } from '../../state/GlobalAuthContext';
+
+const Register = ({ history }) => {
+
+    useEffect(() => {
+        console.log('register did update');
+        console.log(errors)
+    })
 
     // Get the data from register store
     const {
@@ -15,6 +22,21 @@ function Register() {
         on_change
     } = useContext(RegisterStore);
 
+    // const {
+    //     user,
+    //     errors,
+    //     on_submit_register,
+    //     on_change
+    // } = useContext(AuthContext);
+
+    // const {
+    //     name = '',
+    //     email,
+    //     password,
+    //     password2 = ''
+    // } = user;
+
+
     return (
         <div className="register">
             <div className="container">
@@ -22,7 +44,7 @@ function Register() {
                     <div className="col-md-8 m-auto">
                         <h1 className="display-4 text-center">Sign Up</h1>
                         <p className="lead text-center">Create your DevConnector account</p>
-                        <form noValidate onSubmit={on_submit}>
+                        <form noValidate onSubmit={e => on_submit(history, e)}>
                             <div className="form-group">
                                 <input
                                     type="text"
@@ -81,9 +103,9 @@ function Register() {
     )
 }
 
-const connected = () => (
+const connected = props => (
     <RegisterProvider>
-        <Register />
+        <Register history={props.history} />
     </RegisterProvider>
 )
 

@@ -1,10 +1,17 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useContext } from "react";
+import jwt_decode from 'jwt-decode';
+import { AuthContext } from './GlobalAuthContext'
+import { loginUser, setAuthToken } from '../services/authService';
 
 const LoginStore = createContext();
 const { Provider } = LoginStore;
 
 
 const LoginProvider = ({ children }) => {
+
+    //get Auth Context actions to set authentication
+    const { set_current_user } = useContext(AuthContext);
+
     //  Set the register component state
     const [fields, set_fields] = useState({
         email: '',
@@ -20,13 +27,28 @@ const LoginProvider = ({ children }) => {
         })
     }
 
-    const on_submit = e => {
+    const on_submit = (e, history) => {
         e.preventDefault();
 
-        const userData = {
-            ...fields
-        }
-        console.log(userData);
+        loginUser({ ...fields })
+            .then(res => {
+                // save token to localStorge
+                const { token } = res.data;
+                localStorage.setItem('jwtToken', token);
+                //set token to Auth header
+                setAuthToken(token);
+                //decode token to get user data
+                const decoded = jwt_decode(token);
+                // set current user (to global auth component)
+                set_current_user(decoded);
+                //redirect 
+                history.push('/dasboard');
+
+
+            })
+            .catch(err => {
+                set_errors({ ...err.response.data })
+            });
     }
 
     const state = {
