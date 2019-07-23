@@ -42,7 +42,7 @@ const LoginProvider = ({ children }) => {
                 // set current user (to global auth component)
                 set_current_user(decoded);
                 //redirect 
-                history.push('/dasboard');
+                history.push('/profiles');
 
 
             })
