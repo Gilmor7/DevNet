@@ -1,18 +1,11 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../state/GlobalAuthContext'
+import React from 'react';
 
 const Profiles = () => {
 
-    const {
-        isAuthenticated,
-        user
-    } = useContext(AuthContext)
-
     return (
-        <div className="container">
-            {isAuthenticated ? <div>{"hello " + user.name} </div> : <div>nonononon</div>}
+        <div>
         </div>
     )
 }
 
-export default Profiles
+export default Profiles;

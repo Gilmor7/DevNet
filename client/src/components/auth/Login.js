@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import classnames from 'classnames';
 
 import { LoginProvider, LoginStore } from '../../state/Login.store';
+import { AuthContext } from '../../state/GlobalAuthContext';
 
 
 const Login = ({ history }) => {
@@ -14,11 +15,15 @@ const Login = ({ history }) => {
         on_change
     } = useContext(LoginStore);
 
-    // useEffect(() => {
-    //     console.log('login did update');
-    //     console.log(user)
-    //     console.log(errors)
-    // })
+    const { isAuthenticated } = useContext(AuthContext);
+
+    //check if user logged in already and redirect him to dashboard
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/dashboard');
+        }
+    }, [isAuthenticated])
+
 
     return (
         <div className="login">

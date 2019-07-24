@@ -42,9 +42,7 @@ const LoginProvider = ({ children }) => {
                 // set current user (to global auth component)
                 set_current_user(decoded);
                 //redirect 
-                history.push('/profiles');
-
-
+                history.push('/dashboard');
             })
             .catch(err => {
                 set_errors({ ...err.response.data })

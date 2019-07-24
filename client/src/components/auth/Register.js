@@ -2,15 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import classnames from 'classnames'
 
 import { RegisterProvider, RegisterStore } from '../../state/Register.store';
-// import { AuthContext } from '../../state/GlobalAuthContext';
+import { AuthContext } from '../../state/GlobalAuthContext';
 
 const Register = ({ history }) => {
-
-    useEffect(() => {
-        console.log('register did update');
-        console.log(errors)
-    })
-
     // Get the data from register store
     const {
         name,
@@ -22,20 +16,14 @@ const Register = ({ history }) => {
         on_change
     } = useContext(RegisterStore);
 
-    // const {
-    //     user,
-    //     errors,
-    //     on_submit_register,
-    //     on_change
-    // } = useContext(AuthContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
-    // const {
-    //     name = '',
-    //     email,
-    //     password,
-    //     password2 = ''
-    // } = user;
-
+    //check if user logged in already and redirect him to dashboard
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/dashboard');
+        }
+    }, [isAuthenticated])
 
     return (
         <div className="register">

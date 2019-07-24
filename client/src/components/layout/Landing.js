@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../state/GlobalAuthContext';
 
-function Landing() {
+const Landing = ({ history }) => {
+
+    const { isAuthenticated } = useContext(AuthContext);
+
+    //check if user logged in already and redirect him to dashboard
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/dashboard');
+        }
+    }, [isAuthenticated])
+
     return (
         <div className="landing">
             <div className="dark-overlay landing-inner text-light">
