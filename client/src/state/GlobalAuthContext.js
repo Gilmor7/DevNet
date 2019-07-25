@@ -1,14 +1,18 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import isEmpty from '../utils/isEmpty';
 
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from '../services/authService';
+
+import { profileStore } from '../state/Profile.store';
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
 
 
 const AuthContextProvider = ({ children }) => {
+    //get clear profile for clear the current profile when user logout
+    const { clear_current_profile, get_Profile } = useContext(profileStore)
 
     //  Set the auth context state
     const [isAuthenticated, set_isAuthenticated] = useState(false);
@@ -26,6 +30,8 @@ const AuthContextProvider = ({ children }) => {
         setAuthToken(false);
         //set current user to {} and isAuthenticated to false
         set_current_user({});
+        // clear the current profile
+        clear_current_profile()
 
     }
 
@@ -48,13 +54,21 @@ const AuthContextProvider = ({ children }) => {
             if (decoded.exp < currentTime) {
                 //token to longer valid so logout the user
                 logout_user()
-                //TODO: clear the profile
-
+                // clear the profile
+                clear_current_profile()
                 //redirect to login page
                 window.location.href = '/login';
             }
         }
     }, [])
+
+
+    //if user authenticated get current profile from DB
+    useEffect(() => {
+        if (isAuthenticated) {
+            get_Profile();
+        }
+    }, [isAuthenticated])
 
 
     const state = {
