@@ -11,7 +11,7 @@ const Landing = ({ history }) => {
         if (isAuthenticated) {
             history.push('/dashboard');
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated, history])
 
     return (
         <div className="landing">

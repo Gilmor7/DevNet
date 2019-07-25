@@ -15,7 +15,6 @@ const AuthContextProvider = ({ children }) => {
     const [user, set_user] = useState({});
 
     const set_current_user = payload => {
-        console.log('test to isEmpty from globalAuth component set user ' + isEmpty(payload))
         set_isAuthenticated(!isEmpty(payload));
         set_user(payload);
     }
@@ -47,7 +46,6 @@ const AuthContextProvider = ({ children }) => {
             //check for exp of token
             const currentTime = Date.now() / 1000;
             if (decoded.exp < currentTime) {
-                console.log('token expired')
                 //token to longer valid so logout the user
                 logout_user()
                 //TODO: clear the profile
