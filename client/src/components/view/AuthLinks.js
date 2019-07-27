@@ -1,5 +1,5 @@
-import React from 'react'
-//proptypes
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const AuthLinks = ({ logout, avatar, name }) => {
     return (
@@ -18,6 +18,12 @@ const AuthLinks = ({ logout, avatar, name }) => {
             </li>
         </ul>
     )
+}
+
+AuthLinks.propTypes = {
+    logout: PropTypes.func.isRequired,
+    avatar: PropTypes.string,
+    name: PropTypes.string
 }
 
 export default AuthLinks

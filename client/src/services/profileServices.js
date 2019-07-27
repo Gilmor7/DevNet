@@ -4,4 +4,8 @@ const getCurrentProfile = () => {
     return axios.get('/api/profile');
 }
 
-export { getCurrentProfile };
+const createProfile = newProfile => {
+    return axios.post('/api/profile', newProfile);
+}
+
+export { getCurrentProfile, createProfile };

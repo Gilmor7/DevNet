@@ -14,6 +14,7 @@ import Footer from './components/layout/Footer';
 import Dashboard from './components/dashboard/Dashboard';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import CreateProfile from './components/create-profile/CreateProfile'
 import PrivateRoute from './components/common/PrivateRoute'
 
 import './styles.css';
@@ -33,6 +34,7 @@ function App() {
             <Route path="/Login" exact component={Login} />
             <Route path="/Register" exact component={Register} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/create-profile" exact component={CreateProfile} />
           </div>
           <Footer />
         </AuthContextProvider>
