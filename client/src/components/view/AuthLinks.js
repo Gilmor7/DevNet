@@ -1,4 +1,5 @@
 import React from 'react'
+//proptypes
 
 const AuthLinks = ({ logout, avatar, name }) => {
     return (

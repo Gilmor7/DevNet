@@ -57,7 +57,7 @@ const AuthContextProvider = ({ children }) => {
                 // clear the profile
                 clear_current_profile()
                 //redirect to login page
-                window.location.href = '/login';
+                window.location.href = '/';
             }
         }
     }, [])
