@@ -8,4 +8,8 @@ const createProfile = newProfile => {
     return axios.post('/api/profile', newProfile);
 }
 
-export { getCurrentProfile, createProfile };
+const deleteAccount = () => {  //delete profile and user
+    return axios.delete('/api/profile');
+}
+
+export { getCurrentProfile, createProfile, deleteAccount };

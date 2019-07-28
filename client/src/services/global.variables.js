@@ -4,7 +4,7 @@
 
 // Select options for status in profile
 const STATUS_OPTIONS = [
-    { label: '* Select Professional Status', value: 0 },
+    { label: '* Select Professional Status', value: '' },
     { label: 'Developer', value: 'Developer' },
     { label: 'Junior Developer', value: 'Junior Developer' },
     { label: 'Senior Developer', value: 'Senior Developer' },

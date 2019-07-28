@@ -9,11 +9,13 @@ const ProfileProvider = ({ children }) => {
     //  Set the register component state
     const [profile, set_profile] = useState(null)
     // const [profiles, set_profiles] = useState(null)
-    const [profile_loading, set_profile_loading] = useState(true)
+    const [profile_loading, set_profile_loading] = useState(false)
     // const [error_message, set_error_message] = useState(null)
 
     //get profile
     const get_Profile = () => {
+        set_profile_loading(true);
+
         getCurrentProfile()   //fetch profile data from DB with user id on header(axios default)
             .then(res => {
                 set_profile(res.data)

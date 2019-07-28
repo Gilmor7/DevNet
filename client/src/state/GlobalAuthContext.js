@@ -3,8 +3,10 @@ import isEmpty from '../utils/isEmpty';
 
 import jwt_decode from 'jwt-decode';
 import { setAuthToken } from '../services/authService';
+import { deleteAccount } from '../services/profileServices';
 
 import { profileStore } from '../state/Profile.store';
+import { Error } from "mongoose";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
@@ -33,6 +35,19 @@ const AuthContextProvider = ({ children }) => {
         // clear the current profile
         clear_current_profile()
 
+    }
+
+    const delete_account = () => {
+        if (window.confirm('You sure? This can Not be undone!')) {
+            deleteAccount()
+                .then(res => {
+                    clear_current_profile();
+                    set_current_user({});
+                })
+                .catch(err => {
+                    throw new Error(err.response.data);
+                })
+        }
     }
 
 
@@ -78,7 +93,8 @@ const AuthContextProvider = ({ children }) => {
 
     const actions = {
         set_current_user,
-        logout_user
+        logout_user,
+        delete_account
     }
 
     return <Provider value={{ ...state, ...actions }} > {children} </Provider>
