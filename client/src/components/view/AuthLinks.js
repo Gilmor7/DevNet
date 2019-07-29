@@ -1,9 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const AuthLinks = ({ logout, avatar, name }) => {
     return (
         <ul className="navbar-nav ml-auto">
+
+            <li className="nav-item">
+                <Link to="/dashboard"
+                    className="nav-link"
+                // style={{ marginRight: '6px'}}
+                > Dashboard </Link>
+            </li>
+
             <li className="nav-item">
                 <a
                     href="#"
@@ -12,10 +21,11 @@ const AuthLinks = ({ logout, avatar, name }) => {
                     <img
                         src={avatar}
                         alt={name}
-                        style={{ width: '35px', marginRight: '6px', borderRadius: '50%' }}
+                        style={{ width: '32px', margin: '0 6px', borderRadius: '50%' }}
                         title="You must have gravatar connected to email for image" />
                     Logout </a>
             </li>
+
         </ul>
     )
 }

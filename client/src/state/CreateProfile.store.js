@@ -90,6 +90,7 @@ const CreateProfileProvider = ({ children }) => {
     }
 
     const state = {
+        fields,
         ...fields,
         display_social,
         errors
@@ -99,7 +100,8 @@ const CreateProfileProvider = ({ children }) => {
         on_change,
         on_change_social,
         on_submit,
-        set_display_social
+        set_display_social,
+        set_fields
     }
 
     return <Provider value={{ ...state, ...actions }} > {children} </Provider>
