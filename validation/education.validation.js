@@ -5,8 +5,11 @@ const educationSchema = Joi.object().keys({
     degree: Joi.string().required(),
     fieldofstudy: Joi.string().required(),
     from: Joi.date().required(),
-    to: Joi.date(),
     current: Joi.boolean(),
+    to: Joi.when("current", {
+        is: false,
+        then: Joi.date().required()
+    }),
     description: Joi.string()
 })
 

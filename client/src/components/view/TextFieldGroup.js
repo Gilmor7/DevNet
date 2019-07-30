@@ -27,7 +27,13 @@ const TextFieldGroup = ({
                 placeholder={placeholder}
                 onChange={onChange}
             />
-            {error && (<div className="invalid-feedback" >{errorIsJoi ? `${name.charAt(0).toUpperCase() + name.slice(1)} field ${error}` : error}</div>)}
+            {error && (<div className="invalid-feedback" >
+                {
+                    errorIsJoi ?
+                        `${placeholder ? placeholder : name.charAt(0).toUpperCase() + name.slice(1)} field ${error}`
+                        : error
+                }
+            </div>)}
             {info && <small className="form-text text-muted">{info}</small>}
         </div>
     )

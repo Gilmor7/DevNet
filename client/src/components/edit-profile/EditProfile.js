@@ -33,14 +33,27 @@ const EditProfile = ({ history }) => {
     //edit the fields with current profile existing data
     useEffect(() => {
         const newProfile = {};
+        newProfile.social = {
+            ...fields.social
+        };
         Object.keys(fields).forEach(f => {
              //skills is required field so no need for empty check and because it is array we need to join it to string 
-            if(f === 'skills') newProfile[f] = profile[f].join('');
+            if(f === 'skills') newProfile[f] = profile[f].join(',');
+
+            //setup the socials
+            else if(f==='social'){
+                newProfile.social={
+                    ...newProfile.social,
+                    ...profile[f]
+                }
+            }
 
             //if profile field exist add to new var which will replace the fields object from store
             else if( !isEmpty(profile[f]) ) {
                 newProfile[f] = profile[f];
             }
+            else newProfile[f]='';
+
 
         })
         set_fields(newProfile);
@@ -82,8 +95,7 @@ const EditProfile = ({ history }) => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-8 m-auto">
-                        <h1 className="display4 text-center">Create Your Profile</h1>
-                        <p className="lead text-center">Let's get some information to make your profile stand out</p>
+                        <h1 className="display4 text-center">Edit Profile</h1>
                         <small className="d-block pb-3">* = required field</small>
                         <form onSubmit={e => on_submit(history, e)}>
                             <TextFieldGroup

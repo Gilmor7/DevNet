@@ -2,6 +2,7 @@ import React, { useState, createContext, useContext } from "react";
 
 import { createProfile } from '../services/profileServices';
 import { profileStore } from '../state/Profile.store';
+import isEmpty from '../utils/isEmpty';
 
 const CreateProfileStore = createContext();
 const { Provider } = CreateProfileStore;
@@ -55,36 +56,30 @@ const CreateProfileProvider = ({ children }) => {
 
     const on_submit = (history, e) => {
         e.preventDefault();
+        const newProfile = {};
 
-        // set the required fields
-        const newProfile = {
-            handle: fields.handle,
-            status: fields.status,
-            skills: fields.skills
-        }
+        //set the fields to loop over them 
+        const checkFields = {
+            ...fields,
+            ...fields.social
+        };
+        delete checkFields.social; //prevent duplicates
 
-        //check for the optional fields and add the fulls (for prevent validation for optional fields)
-
-        const optionalFields = {
-            ...fields.social,
-            location: fields.location,
-            company: fields.company,
-            website: fields.website,
-            bio: fields.bio,
-            githubusername: fields.githubusername,
-        }
-
-        //loop over the optional fields and add the texted fields to the newProfile object 
-        Object.keys(optionalFields).forEach(key => {
-            if (optionalFields[key].trim() !== '') newProfile[key] = optionalFields[key];
+        //loop over the fields and add the texted fields to the newProfile object 
+        Object.keys(checkFields).forEach(key => {
+            if (!isEmpty(checkFields[key])) newProfile[key] = checkFields[key];
         })
 
+        // axios post request to server (return promise)
+        // the create profile route works for both create and update profile
         createProfile(newProfile)
             .then(res => {
+                //if everything is ok set the new profile and redirect to dashboard
                 set_profile(res.data);
                 history.push('/dashboard')
             })
             .catch(err => {
+                //if there are validation errors set them to the errors object 
                 set_errors({ ...err.response.data });
             })
     }

@@ -16,6 +16,8 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
+import AddExperience from './components/create-profile/AddExperience';
+import AddEducation from './components/create-profile/AddEducation';
 import PrivateRoute from './components/common/PrivateRoute';
 
 import './styles.css';
@@ -37,6 +39,8 @@ function App() {
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/create-profile" exact component={CreateProfile} />
             <PrivateRoute path="/edit-profile" exact component={EditProfile} />
+            <PrivateRoute path="/add-experience" exact component={AddExperience} />
+            <PrivateRoute path="/add-education" exact component={AddEducation} />
           </div>
           <Footer />
         </AuthContextProvider>

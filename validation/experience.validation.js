@@ -5,8 +5,11 @@ const experienceSchema = Joi.object().keys({
     company: Joi.string().required(),
     location: Joi.string(),
     from: Joi.date().required(),
-    to: Joi.date(),
     current: Joi.boolean(),
+    to: Joi.when("current", {
+        is: false,
+        then: Joi.date().required()
+    }),
     description: Joi.string()
 })
 
