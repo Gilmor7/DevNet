@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import ProfileActions from './ProfileActions';
-import Experiences from './Experiences';
-import Educations from './Educations';
+import CredentialsTable from './CredentialsTable';
 
 const ProfileDashboard = ({ name, handle, onClickDelete, profile, deleteExp, deleteEdu }) => {
     return (
@@ -12,14 +11,20 @@ const ProfileDashboard = ({ name, handle, onClickDelete, profile, deleteExp, del
             <p className="lead text-muted">Welcome <Link to={`/profile/${handle}`}> {name} </Link></p>
             <ProfileActions />
 
-            <Experiences
-                experiences={profile.experience}
-                deleteExp={deleteExp}
+            <CredentialsTable
+                credentials={profile.experience}
+                topic="Experience Credentials"
+                title1="company"
+                title2="title"
+                deleteCredential={deleteExp}
             />
 
-            <Educations
-                educations={profile.education}
-                deleteEdu={deleteEdu}
+            <CredentialsTable
+                credentials={profile.education}
+                topic="Education Credentials"
+                title1="school"
+                title2="degree"
+                deleteCredential={deleteEdu}
             />
 
             <button className="btn btn-danger d-block"
