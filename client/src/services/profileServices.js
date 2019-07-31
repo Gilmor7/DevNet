@@ -23,4 +23,20 @@ const addEducation = newEdu => {
     return axios.post('/api/profile/education', newEdu);
 }
 
-export { getCurrentProfile, createProfile, deleteAccount, addExperience, addEducation };
+const deleteExperience = expId => {
+    return axios.delete(`api/profile/experience/${expId}`);
+}
+
+const deleteEducation = eduId => {
+    return axios.delete(`api/profile/education/${eduId}`);
+}
+
+export {
+    getCurrentProfile,
+    createProfile,
+    deleteAccount,
+    addExperience,
+    addEducation,
+    deleteEducation,
+    deleteExperience
+};

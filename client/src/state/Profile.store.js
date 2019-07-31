@@ -1,12 +1,12 @@
 import React, { useState, createContext } from "react";
-import { getCurrentProfile } from '../services/profileServices';
+import { getCurrentProfile, deleteExperience, deleteEducation } from '../services/profileServices';
 
 const profileStore = createContext();
 const { Provider } = profileStore;
 
 
 const ProfileProvider = ({ children }) => {
-    //  Set the register component state
+    //  Set the Profile Global state
     const [profile, set_profile] = useState(null)
     // const [profiles, set_profiles] = useState(null)
     const [profile_loading, set_profile_loading] = useState(false)
@@ -32,6 +32,21 @@ const ProfileProvider = ({ children }) => {
         set_profile(null);
     }
 
+    const delete_experience = expId => {
+        deleteExperience(expId)
+            .then(res => {
+                set_profile(res.data)
+            })
+            .catch(err => console.log(err.response.data))
+    }
+
+    const delete_education = eduId => {
+        deleteEducation(eduId)
+            .then(res => {
+                set_profile(res.data)
+            })
+            .catch(err => console.log(err.response.data))
+    }
 
     //profile_not_found
     //get profiles
@@ -44,7 +59,9 @@ const ProfileProvider = ({ children }) => {
     const actions = {
         clear_current_profile,
         get_Profile,
-        set_profile
+        set_profile,
+        delete_experience,
+        delete_education
     }
 
     return <Provider value={{ ...state, ...actions }} > {children} </Provider>

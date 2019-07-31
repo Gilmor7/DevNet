@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CreateProfileProvider, CreateProfileStore } from '../../state/CreateProfile.store';
 import {  profileStore } from '../../state/Profile.store';
@@ -95,6 +96,9 @@ const EditProfile = ({ history }) => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-8 m-auto">
+                    <Link to="/dashboard" className="btn btn-light">
+                            Go Back
+                        </Link>
                         <h1 className="display4 text-center">Edit Profile</h1>
                         <small className="d-block pb-3">* = required field</small>
                         <form onSubmit={e => on_submit(history, e)}>

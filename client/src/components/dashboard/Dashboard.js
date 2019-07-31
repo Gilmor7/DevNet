@@ -10,7 +10,14 @@ import ProfileDashboard from './ProfileDashboard';
 
 const Dashboard = () => {
 
-    const { profile, profile_loading } = useContext(profileStore);
+    const {
+        profile,
+        profile_loading,
+        error_message,
+        delete_experience,
+        delete_education
+    } = useContext(profileStore);
+
     const { user, delete_account } = useContext(AuthContext);
 
     let dashboardContent;
@@ -20,12 +27,20 @@ const Dashboard = () => {
     else {
         //check if the current user have a profile 
         if (Object.keys(profile).length > 0) {
-            dashboardContent =
-                <ProfileDashboard
-                    name={user.name}
-                    handle={profile.handle}
-                    onClickDelete={delete_account}
-                />;
+            dashboardContent = (
+                <React.Fragment>
+                    <ProfileDashboard
+                        err={error_message}
+                        deleteExp={delete_experience}
+                        deleteEdu={delete_education}
+                        profile={profile}
+                        name={user.name}
+                        handle={profile.handle}
+                        onClickDelete={delete_account}
+                    />
+                </React.Fragment>
+            );
+
         } else {
             //the user does not have profile yet 
             dashboardContent = <NoProfile name={user.name} />;
