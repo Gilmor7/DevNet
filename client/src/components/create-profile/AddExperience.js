@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ExpProvider, ExpStore } from '../../state/AddExperience.store';
+import { AddDetailStore, AddDetailProvider } from '../../state/AddProfileDetails.store';
+
+import { addExperience } from '../../services/profileServices';
+import { EXP_STRUCTURE } from '../../services/global.variables';
 
 import TextFieldGroup from '../view/TextFieldGroup';
 import TextAreaField from '../view/TextAreaField';
@@ -14,8 +17,8 @@ const AddExperience = ({ history }) => {
         errors,
         on_change,
         on_submit,
-        set_current_job
-    } = useContext(ExpStore);
+        set_to_current
+    } = useContext(AddDetailStore);
 
     return (
         <div className="section add-experience">
@@ -86,7 +89,7 @@ const AddExperience = ({ history }) => {
                                 id="current"
                                 name="currrent"
                                 value={fields.current}
-                                onChange={set_current_job}
+                                onChange={set_to_current}
                                 info="Current Job"
                             />
 
@@ -111,9 +114,9 @@ const AddExperience = ({ history }) => {
 }
 
 const connected = props => (
-    <ExpProvider>
+    <AddDetailProvider initialState={EXP_STRUCTURE} fetchFunc={addExperience}>
         <AddExperience history={props.history} />
-    </ExpProvider>
+    </AddDetailProvider>
 )
 
 export default connected;

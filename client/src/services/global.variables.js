@@ -27,5 +27,26 @@ const SOCIALS = [
 //-------------------------------------------------------------------------
 
 
+// Add education and Add experience initial States and structure
 
-export { SOCIALS, STATUS_OPTIONS };
+const EDU_STRUCTURE = {
+    school: '',
+    degree: '',
+    fieldofstudy: '',
+    from: '',
+    to: '',
+    current: false,
+    description: ''
+}
+
+const EXP_STRUCTURE = {
+    title: '',
+    company: '',
+    location: '',
+    from: '',
+    to: '',
+    current: false,
+    description: ''
+}
+
+export { SOCIALS, STATUS_OPTIONS, EXP_STRUCTURE, EDU_STRUCTURE };

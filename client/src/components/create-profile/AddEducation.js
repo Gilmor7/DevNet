@@ -1,7 +1,10 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 
-import { EduProvider, EduStore } from '../../state/addEducation.store';
+import { addEducation } from '../../services/profileServices';
+import { EDU_STRUCTURE } from '../../services/global.variables';
+
+import { AddDetailProvider, AddDetailStore } from '../../state/AddProfileDetails.store'
 
 import TextFieldGroup from '../view/TextFieldGroup';
 import TextAreaField from '../view/TextAreaField';
@@ -14,8 +17,8 @@ const AddEducation = ({ history }) => {
         errors,
         on_change,
         on_submit,
-        set_current_studies
-    } = useContext(EduStore);
+        set_to_current
+    } = useContext(AddDetailStore);
 
 
     return (
@@ -87,7 +90,7 @@ const AddEducation = ({ history }) => {
                                 id="current"
                                 name="currrent"
                                 value={fields.current}
-                                onChange={set_current_studies}
+                                onChange={set_to_current}
                                 info="Current Studies"
                             />
 
@@ -102,38 +105,6 @@ const AddEducation = ({ history }) => {
                                 info="Tell us about your experience and what you learned"
                             />
 
-
-
-
-
-
-                            {/* <div className="form-group">
-                                <input type="text" className="form-control form-control-lg" placeholder="* School Or Bootcamp" name="school" required />
-                            </div>
-                            <div className="form-group">
-                                <input type="text" className="form-control form-control-lg" placeholder="* Degree Or Certificate" name="degree" required />
-                            </div> */}
-                            {/* <div className="form-group">
-                                <input type="text" className="form-control form-control-lg" placeholder="Field Of Study" name="fieldofstudy" />
-                            </div> */}
-                            {/* <h6>From Date</h6>
-                            <div className="form-group">
-                                <input type="date" className="form-control form-control-lg" name="from" />
-                            </div>
-                            <h6>To Date</h6>
-                            <div className="form-group">
-                                <input type="date" className="form-control form-control-lg" name="to" />
-                            </div>
-                            <div className="form-check mb-4">
-                                <input className="form-check-input" type="checkbox" name="current" value="" id="current" />
-                                <label className="form-check-label" htmlFor="current">
-                                    Current Job
-          </label>
-                            </div>
-                            <div className="form-group">
-                                <textarea className="form-control form-control-lg" placeholder="Program Description" name="description"></textarea>
-                                <small className="form-text text-muted">Tell us about your experience and what you learned</small>
-                            </div> */}
                             <input type="submit" className="btn btn-info btn-block mt-4" />
                         </form>
                     </div>
@@ -144,9 +115,9 @@ const AddEducation = ({ history }) => {
 }
 
 const connected = props => (
-    <EduProvider>
+    <AddDetailProvider initialState={EDU_STRUCTURE} fetchFunc={addEducation} >
         <AddEducation history={props.history} />
-    </EduProvider>
+    </AddDetailProvider>
 )
 
 export default connected;
