@@ -1,8 +1,14 @@
 import axios from 'axios';
 //if user is authenticated all the requests will be sent with acces token
 
+// async function that return the current profile from server
 const getCurrentProfile = () => {
     return axios.get('/api/profile');
+}
+
+// async function that return all the profiles in array from server
+const getAllProfiles = () => {
+    return axios.get('/api/profile/all');
 }
 
 
@@ -38,5 +44,6 @@ export {
     addExperience,
     addEducation,
     deleteEducation,
-    deleteExperience
+    deleteExperience,
+    getAllProfiles
 };

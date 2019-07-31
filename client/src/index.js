@@ -9,6 +9,7 @@ import { AuthContextProvider } from './state/GlobalAuthContext';
 import NavBar from './components/layout/NavBar';
 import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
+import Developers from './components/layout/Developers';
 import Dashboard from './components/dashboard/Dashboard';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -34,6 +35,7 @@ function App() {
           <div className="container">
             <Route path="/Login" exact component={Login} />
             <Route path="/Register" exact component={Register} />
+            <Route path="/profiles" exact component={Developers} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/create-profile" exact component={CreateProfile} />
             <PrivateRoute path="/edit-profile" exact component={EditProfile} />
