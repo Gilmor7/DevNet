@@ -37,6 +37,10 @@ const deleteEducation = eduId => {
     return axios.delete(`api/profile/education/${eduId}`);
 }
 
+const getProfileByHandle = handle => {
+    return axios.get(`api/profile/handle/${handle}`);
+}
+
 export {
     getCurrentProfile,
     createProfile,
@@ -45,5 +49,6 @@ export {
     addEducation,
     deleteEducation,
     deleteExperience,
-    getAllProfiles
+    getAllProfiles,
+    getProfileByHandle
 };

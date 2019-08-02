@@ -27,7 +27,7 @@ const Developers = () => {
                     </div>
                     <div className="col-lg-6 col-md-4 col-8">
                         <h3>{profile.user.name}</h3>
-                        {profile.status && <p>{profile.status} at {profile.company || "None"}</p>}
+                        {profile.status && <p>{profile.status} {" "} {profile.company ? "at " + profile.company : ""}</p>}
                         {profile.location && <p>{profile.location}</p>}
                         <Link to={`/profile/${profile.handle}`} className="btn btn-info">View Profile</Link>
                     </div>
