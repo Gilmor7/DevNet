@@ -11,7 +11,9 @@ const EducationList = ({ credsArr }) => {
             <ul className="list-group">
 
                 {credsArr.map(crd => (
-                    <li className="list-group-item">
+                    <li
+                        key={crd._id}
+                        className="list-group-item">
                         <h4>{capitalize(crd.school)}</h4>
                         <p>
                             <Moment format='MMM YYYY' >{crd.from}</Moment> -

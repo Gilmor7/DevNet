@@ -7,10 +7,9 @@ const AuthLinks = ({ logout, avatar, name }) => {
         <ul className="navbar-nav ml-auto">
 
             <li className="nav-item">
-                <Link to="/dashboard"
-                    className="nav-link"
-                // style={{ marginRight: '6px'}}
-                > Dashboard </Link>
+                <Link to="/dashboard" className="nav-link">
+                    Dashboard
+                </Link>
             </li>
 
             <li className="nav-item">
@@ -21,7 +20,7 @@ const AuthLinks = ({ logout, avatar, name }) => {
                     <img
                         src={avatar}
                         alt={name}
-                        style={{ width: '32px', margin: '0 6px', borderRadius: '50%' }}
+                        style={{ width: '25px', margin: '0 6px', borderRadius: '50%' }}
                         title="You must have gravatar connected to email for image" />
                     Logout </a>
             </li>

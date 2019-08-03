@@ -45,7 +45,7 @@ const ProfileGithub = ({ user }) => {
     return (
         <div>
             <hr />
-            <h3 class="mb-4">Latest Github Repos</h3>
+            <h3 className="mb-4">Latest Github Repos</h3>
             {loading ? <Spinner /> : content}
         </div>
     )

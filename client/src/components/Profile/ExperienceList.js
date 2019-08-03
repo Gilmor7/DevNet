@@ -13,7 +13,7 @@ function ExperienceList({ credsArr }) {
 
                 {credsArr.map(crd => (
                     <li
-                        key={credsArr._id}
+                        key={crd._id}
                         className="list-group-item">
                         <h4>{capitalize(crd.company)}</h4>
                         <p>
