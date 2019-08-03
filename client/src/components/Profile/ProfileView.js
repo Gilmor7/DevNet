@@ -4,6 +4,8 @@ import { getProfileByHandle } from '../../services/profileServices';
 
 import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
+import ProfileCreds from './ProfileCreds';
+import ProfileGithub from './ProfileGithub';
 import Spinner from '../view/Spinner';
 
 
@@ -35,6 +37,11 @@ const ProfileView = props => {
                         skills={profile.skills}
                         name={profile.user.name}
                     />
+                    <ProfileCreds
+                        experience={profile.experience}
+                        education={profile.education}
+                    />
+                    {profile.githubusername && <ProfileGithub user={profile.githubusername} />}
                 </React.Fragment>
             ) : <Spinner />}
 

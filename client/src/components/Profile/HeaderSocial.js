@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 
 const HeaderSocial = ({ s, link }) => (
-    <a className="text-white p-2" href={link} target="_blank">
+    <Link className="text-white p-2" to={link} target="_blank">
         <i className={`fab fa-${s} fa-2x`} />
-    </a>
+    </Link>
 )
 
 HeaderSocial.propTypes = {
