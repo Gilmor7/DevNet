@@ -12,7 +12,7 @@ const PostSchema = new Schema({
     },
     name: {
         type: String
-    },                       //name and avatar will come from the front end 
+    },                       //name and avatar will come from the front (client side) 
     avatar: {
         type: String
     },

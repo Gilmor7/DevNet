@@ -6,7 +6,6 @@ import { setAuthToken } from '../services/authService';
 import { deleteAccount } from '../services/profileServices';
 
 import { profileStore } from '../state/Profile.store';
-import { Error } from "mongoose";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
@@ -46,6 +45,7 @@ const AuthContextProvider = ({ children }) => {
                 })
                 .catch(err => {
                     throw new Error(err.response.data);
+                    //redirect to not fond
                 })
         }
     }

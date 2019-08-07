@@ -81,6 +81,7 @@ const CreateProfileProvider = ({ children }) => {
             .catch(err => {
                 //if there are validation errors set them to the errors object 
                 set_errors({ ...err.response.data });
+                //take care of server error
             })
     }
 
