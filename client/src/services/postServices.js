@@ -1,15 +1,26 @@
 import axios from 'axios';
 
-const getAllPosts = () => {
+export const getAllPosts = () => {
     return axios.get('api/posts');
 }
 
-const getPostById = postId => {
+export const getPostById = postId => {
     return axios.get(`api/posts/${postId}`);
 }
 
-const createNewPost = newPost => {
+export const createNewPost = newPost => {
     return axios.post('api/posts', newPost);
 }
 
-export { getAllPosts, createNewPost, getPostById }
+export const deletePostById = postId => {
+    return axios.delete(`api/posts/${postId}`, postId);
+}
+
+export const likePost = postId => {
+    return axios.post(`api/posts/like/${postId}`, postId)
+}
+
+export const dislikePost = postId => {
+    return axios.delete(`api/posts/unlike/${postId}`, postId)
+}
+

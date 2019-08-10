@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import { ProfileProvider } from './state/Profile.store';
 import { AuthContextProvider } from './state/GlobalAuthContext';
-import { PostsProvider } from './state/Posts.store';
 
 
 import NavBar from './components/layout/NavBar';
@@ -15,6 +14,7 @@ import Developers from './components/layout/Developers';
 import ProfileView from './components/Profile/ProfileView';
 import Dashboard from './components/dashboard/Dashboard';
 import PostsFeed from './components/posts/PostsFeed';
+import Post from './components/post/Post'
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import CreateProfile from './components/create-profile/CreateProfile';
@@ -42,9 +42,8 @@ function App() {
             <Route path="/profiles" exact component={Developers} />
             <Route path="/profile/:handle" exact component={ProfileView} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <PostsProvider>
-              <PrivateRoute path="/feed" exact component={PostsFeed} />
-            </PostsProvider>
+            <PrivateRoute path="/feed" exact component={PostsFeed} />
+            <PrivateRoute path="/post/:post_id" exact component={Post} />
             <PrivateRoute path="/create-profile" exact component={CreateProfile} />
             <PrivateRoute path="/edit-profile" exact component={EditProfile} />
             <PrivateRoute path="/add-experience" exact component={AddExperience} />
