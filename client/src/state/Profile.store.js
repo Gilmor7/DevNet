@@ -7,10 +7,25 @@ const { Provider } = profileStore;
 
 const ProfileProvider = ({ children }) => {
     //  Set the Profile Global state
-    const [profile, set_profile] = useState(null)
+    const [profile, set_current_profile] = useState(null)
     const [profiles, set_profiles] = useState([])
     const [profile_loading, set_profile_loading] = useState(false)
 
+
+    const set_profile = newProfile => {
+        localStorage.setItem('currentProfile', JSON.stringify(newProfile));
+        set_current_profile(newProfile)
+    }
+
+    const getProfile = () => {
+
+        const lsProfile = localStorage.getItem('currentProfile');
+        if (lsProfile)
+            set_profile(JSON.parse(lsProfile));
+
+        else get_Profile();
+
+    }
 
     //get all profiles 
     const get_all_profiles = () => {
@@ -20,11 +35,20 @@ const ProfileProvider = ({ children }) => {
             .then(res => {
                 set_profiles(res.data)
                 set_profile_loading(false);
+                sessionStorage.setItem('allProfiles', JSON.stringify(res.data))
             })
             .catch(err => {
                 set_profiles([]);
                 set_profile_loading(false);
             });
+    }
+
+    const getProfiles = () => {
+        const profiles = sessionStorage.getItem('allProfiles')
+
+        if (profiles) set_profiles(JSON.parse(profiles));
+        else get_all_profiles();
+
     }
 
     //get profile
@@ -35,6 +59,7 @@ const ProfileProvider = ({ children }) => {
             .then(res => {
                 set_profile(res.data)
                 set_profile_loading(false);
+                localStorage.setItem('currentProfile', JSON.stringify(res.data))
             })
             .catch(err => {
                 set_profile({})
@@ -45,6 +70,7 @@ const ProfileProvider = ({ children }) => {
     //clear current profile
     const clear_current_profile = () => {
         set_profile(null);
+        localStorage.removeItem('currentProfile');
     }
 
     const delete_experience = expId => {
@@ -64,7 +90,6 @@ const ProfileProvider = ({ children }) => {
     }
 
     //profile_not_found
-    //get profiles
 
     const state = {
         profile,
@@ -74,9 +99,10 @@ const ProfileProvider = ({ children }) => {
 
     const actions = {
         clear_current_profile,
-        get_Profile,
-        get_all_profiles,
+        // get_all_profiles,
+        getProfiles,
         set_profile,
+        getProfile,
         delete_experience,
         delete_education
     }

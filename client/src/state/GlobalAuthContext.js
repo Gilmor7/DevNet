@@ -13,7 +13,7 @@ const { Provider } = AuthContext;
 
 const AuthContextProvider = ({ children }) => {
     //get clear profile for clear the current profile when user logout
-    const { clear_current_profile, get_Profile } = useContext(profileStore)
+    const { clear_current_profile, getProfile } = useContext(profileStore)
 
     //  Set the auth context state
     const [isAuthenticated, set_isAuthenticated] = useState(false);
@@ -81,7 +81,7 @@ const AuthContextProvider = ({ children }) => {
     //if user authenticated get current profile from DB
     useEffect(() => {
         if (isAuthenticated) {
-            get_Profile();
+            getProfile()
         }
     }, [isAuthenticated])
 

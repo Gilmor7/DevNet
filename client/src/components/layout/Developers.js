@@ -7,11 +7,11 @@ const Developers = () => {
 
     const {
         profiles,
-        get_all_profiles
+        getProfiles
     } = useContext(profileStore);
 
     useEffect(() => {
-        get_all_profiles()
+        getProfiles()
     }, [])
 
 
