@@ -15,10 +15,10 @@ const PostsProvider = ({ children }) => {
     // Set the feed state
     const [posts, set_posts] = useState([]);
     const [loading, set_loading] = useState(false);
-    const [likeObj, set_likeObj] = useState({
-        disableLike: false,
-        disableUnlike: true
-    })
+    // const [likeObj, set_likeObj] = useState({
+    //     disableLike: false,
+    //     disableUnlike: true
+    // })
 
     // Create post state
     const [text, set_text] = useState("");
@@ -55,7 +55,8 @@ const PostsProvider = ({ children }) => {
 
     const createPost = (e, name, avatar) => {
         e.preventDefault()
-
+        console.log(avatar)
+        console.log(name)
         createNewPost({
             text,
             name,

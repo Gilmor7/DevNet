@@ -1,11 +1,9 @@
 import axios from 'axios';
 
+
+//ajax calls for the posts feed
 export const getAllPosts = () => {
     return axios.get('api/posts');
-}
-
-export const getPostById = postId => {
-    return axios.get(`api/posts/${postId}`);
 }
 
 export const createNewPost = newPost => {
@@ -17,10 +15,24 @@ export const deletePostById = postId => {
 }
 
 export const likePost = postId => {
-    return axios.post(`api/posts/like/${postId}`, postId)
+    return axios.post(`api/posts/like/${postId}`, postId);
 }
 
 export const dislikePost = postId => {
-    return axios.delete(`api/posts/unlike/${postId}`, postId)
+    return axios.delete(`api/posts/unlike/${postId}`, postId);
+}
+
+
+//ajax calls for the full post page
+export const getPostById = postId => {
+    return axios.get(`api/posts/${postId}`);
+}
+
+export const createComment = (postId, comment) => {
+    return axios.post(`api/posts/comment/${postId}`, comment);
+}
+
+export const deleteComment = (postId, commentId) => {
+    return axios.delete(`api/posts/comment/${postId}/${commentId}`);
 }
 

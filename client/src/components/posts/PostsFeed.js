@@ -42,7 +42,7 @@ const PostsFeed = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <CreatePost name={profile.name} avatar={profile.avatar} />
+                    <CreatePost name={profile.user.name} avatar={profile.user.avatar} />
                     {!loading ? postsFeed : <Spinner />}
                 </div>
             </div>

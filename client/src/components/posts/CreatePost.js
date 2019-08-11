@@ -7,7 +7,6 @@ import isEmpty from '../../utils/isEmpty'
 import TextAreaField from '../view/TextAreaField';
 
 const CreatePost = ({ name, avatar }) => {
-
     const { createPost, onChangeText, err, text } = useContext(FeedStore);
 
     return (

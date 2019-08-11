@@ -1,21 +1,61 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
+import isEmpty from '../../utils/isEmpty';
 
-const Post = ({ match }) => {
+import { PostStore, PostProvider } from '../../state/Post.store';
+import { profileStore } from '../../state/Profile.store';
+
+import PostItem from './PostItem';
+import AddComment from './AddComment';
+import CommentsFeed from './CommentsFeed';
+import Spinner from '../view/Spinner';
+
+const Post = () => {
+
+    const { profile } = useContext(profileStore);
+    const { postData, loading } = useContext(PostStore);
+
+    let content = null;
+
+    if (loading === true) {
+        content = <Spinner />;
+    } else if (isEmpty(postData)) {
+        content = <h3>Post not found </h3>
+    }
+    else content = (
+        <React.Fragment>
+            <PostItem {...postData} />
+            <AddComment
+                name={profile.user.name}
+                avatar={profile.user.avatar}
+            />
+            {postData.comments.length > 0 && <CommentsFeed comments={postData.comments} />}
+        </React.Fragment>
+    )
+
     return (
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-
-                    <Link to="/feed" className="btn btn-light">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-12">
+                    <Link to="/feed" className="btn btn-light mb-4">
                         Go Back
-                        </Link>
-                    hello this is post id: {match.params.post_id}
+                    </Link>
+
+                    {content}
+
                 </div>
             </div>
         </div>
+
     )
 }
 
-export default Post
+
+const connected = ({ match }) => (
+    <PostProvider match={match}>
+        <Post />
+    </PostProvider>
+)
+
+export default connected;

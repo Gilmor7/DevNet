@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
-const PostView = ({ text, avatar, numLikes, name: author, id, owner, onDelete, likePost, unlikePost, disableLike }) => {
+const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, likePost, unlikePost, disableLike }) => {
+
     return (
         <div className="card card-body mb-3">
             <div className="row">
@@ -32,7 +33,7 @@ const PostView = ({ text, avatar, numLikes, name: author, id, owner, onDelete, l
                         className="btn btn-light mr-1">
                         <i className="text-secondary fas fa-thumbs-down"></i>
                     </button>
-                    <Link to={`/post/${id}`} className="btn btn-info mr-1">
+                    <Link to={`/post/${_id}`} className="btn btn-info mr-1">
                         Comments
                    </Link>
                     {owner && <button
@@ -48,6 +49,16 @@ const PostView = ({ text, avatar, numLikes, name: author, id, owner, onDelete, l
 }
 
 PostView.propTypes = {
+    text: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
+    numLikes: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    _id: PropTypes.string,
+    owner: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func,
+    likePost: PropTypes.func.isRequired,
+    unlikePost: PropTypes.func.isRequired,
+    disableLike: PropTypes.bool.isRequired
 }
 
-export default PostView
+export default PostView;
