@@ -23,7 +23,7 @@ const AddComment = ({ name, avatar }) => {
                                 value={text}
                                 placeholder="Add a comment"
                                 onChange={onChangeText}
-                                error={err.text || null}
+                                error={err ? err.text : null}
                             />
                         </div>
                         <button type="submit" className="btn btn-dark">Submit</button>

@@ -52,8 +52,8 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
         })
             .then(res => {
                 set_text("");
-                set_err({});//just to make a re render 
-                getPost(post_id)
+                set_err({});
+                getPost(post_id) //cause re render
             })
             .catch(err => set_err(err.response.data))
     }

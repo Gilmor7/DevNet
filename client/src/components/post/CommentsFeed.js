@@ -8,7 +8,9 @@ const CommentsFeed = ({ comments }) => {
         <div>
             {
                 comments.map(com => (
-                    <PostItem {...com} />
+                    <PostItem
+                        key={com._id}
+                        {...com} />
                 ))
             }
         </div>
