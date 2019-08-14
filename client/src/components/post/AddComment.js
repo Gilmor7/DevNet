@@ -5,7 +5,7 @@ import { PostStore } from '../../state/Post.store';
 
 import TextAreaField from '../view/TextAreaField'
 
-const AddComment = ({ name, avatar }) => {
+const AddComment = () => {
 
     const { text, err, onChangeText, addComment } = useContext(PostStore)
 
@@ -16,7 +16,7 @@ const AddComment = ({ name, avatar }) => {
                     Say Somthing...
 </div>
                 <div className="card-body">
-                    <form noValidate onSubmit={e => addComment(e, name, avatar)}>
+                    <form noValidate onSubmit={addComment}>
                         <div className="form-group">
                             <TextAreaField
                                 name="text"

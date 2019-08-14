@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import isEmpty from '../../utils/isEmpty';
 
 import { PostStore, PostProvider } from '../../state/Post.store';
-import { profileStore } from '../../state/Profile.store';
 
 import PostItem from './PostItem';
 import AddComment from './AddComment';
@@ -13,7 +12,6 @@ import Spinner from '../view/Spinner';
 
 const Post = () => {
 
-    const { profile } = useContext(profileStore);
     const { postData, loading } = useContext(PostStore);
 
     let content = null;
@@ -21,15 +19,12 @@ const Post = () => {
     if (loading === true) {
         content = <Spinner />;
     } else if (isEmpty(postData)) {
-        content = <h3>Post not found </h3>
+        content = <h3> Post not found </h3>
     }
     else content = (
         <React.Fragment>
             <PostItem {...postData} />
-            <AddComment
-                name={profile.user.name}
-                avatar={profile.user.avatar}
-            />
+            <AddComment />
             {postData.comments.length > 0 && <CommentsFeed comments={postData.comments} />}
         </React.Fragment>
     )

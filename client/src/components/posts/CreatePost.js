@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { FeedStore } from '../../state/Feed.store';
 
@@ -6,7 +6,7 @@ import isEmpty from '../../utils/isEmpty'
 
 import TextAreaField from '../view/TextAreaField';
 
-const CreatePost = ({ name, avatar }) => {
+const CreatePost = () => {
     const { createPost, onChangeText, err, text } = useContext(FeedStore);
 
     return (
@@ -16,9 +16,7 @@ const CreatePost = ({ name, avatar }) => {
                     Say Somthing...
                  </div>
                 <div className="card-body">
-                    <form noValidate onSubmit={e => {
-                        createPost(e, name, avatar);
-                    }}>
+                    <form noValidate onSubmit={createPost}>
 
                         <TextAreaField
                             placeholder="Create a post"

@@ -5,21 +5,20 @@ import Spinner from '../view/Spinner';
 import CreatePost from './CreatePost';
 
 import { FeedStore, PostsProvider } from '../../state/Feed.store';
-import { profileStore } from '../../state/Profile.store';
+
 
 const PostsFeed = () => {
 
-    const { profile } = useContext(profileStore);
-    const { loading, posts, deletePost, like, unlike } = useContext(FeedStore);
+    const { loading, posts, deletePost, like, unlike, compareIdToCurrentUser } = useContext(FeedStore);
 
-    let postsFeed;
+    let postsFeed = null;
 
     if (posts.length > 0) {
         postsFeed = posts.map(post => {
             const { likes, comments, ...copy } = post
-            const owner = post.user === profile.user._id //boolean - is the user is post owner?
+            const IsPostOwner = compareIdToCurrentUser(post.user) //boolean - is the user is post Owner?
             const disableLike = likes.map(like => like.user)
-                .filter(userId => userId === profile.user._id)
+                .filter(userId => compareIdToCurrentUser(userId));
             return (
                 <PostView
                     key={post._id}
@@ -27,22 +26,22 @@ const PostsFeed = () => {
                     unlikePost={() => unlike(post._id)}
                     numLikes={likes.length}
                     {...copy}
-                    owner={owner}
-                    onDelete={owner ? () => deletePost(post._id) : null}
+                    owner={IsPostOwner}
+                    onDelete={IsPostOwner ? () => deletePost(post._id) : null}
                     disableLike={disableLike.length > 0}
                 />
             )
 
         })
     }
-    else postsFeed = "There are no posts to show";
+    else postsFeed = <p> No Posts Found </p>;
 
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <CreatePost name={profile.user.name} avatar={profile.user.avatar} />
+                    <CreatePost />
                     {!loading ? postsFeed : <Spinner />}
                 </div>
             </div>

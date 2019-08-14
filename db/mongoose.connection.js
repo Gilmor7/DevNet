@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { DB_HOST = "localhost", DB_PORT = 27017, DB_NAME = "devconnector" } = process.env
-
-const uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const uri = `mongodb+srv://gilmor7:blitz0549409597@gmcluster-wmkj2.mongodb.net/test?retryWrites=true&w=majority`;
 
 const options = {
     useNewUrlParser: true,

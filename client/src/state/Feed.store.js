@@ -1,11 +1,14 @@
-import React, {
-    useState,
-    useEffect
-}
-    from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
+import {
+    createNewPost,
+    getAllPosts,
+    deletePostById,
+    likePost,
+    dislikePost
+} from '../services/postServices';
 
-import { createNewPost, getAllPosts, deletePostById, likePost, dislikePost } from '../services/postServices';
+import { AuthContext } from './GlobalAuthContext';
 
 const FeedStore = React.createContext();
 const { Provider } = FeedStore;
@@ -23,6 +26,9 @@ const PostsProvider = ({ children }) => {
     // Create post state
     const [text, set_text] = useState("");
     const [err, set_err] = useState({});
+
+    //get user avatar and name from user info
+    const { id: currentUserId, name, avatar } = useContext(AuthContext).user;
 
     //function that fetch all posts from DB and store them in posts state
     const getPosts = () => {
@@ -53,7 +59,7 @@ const PostsProvider = ({ children }) => {
     }
 
 
-    const createPost = (e, name, avatar) => {
+    const createPost = e => {
         e.preventDefault()
         console.log(avatar)
         console.log(name)
@@ -89,6 +95,10 @@ const PostsProvider = ({ children }) => {
             .catch(err => console.log(err.response.data))
     }
 
+    const compareIdToCurrentUser = userId => {  //userId == post.user / like.user
+        return userId === currentUserId;
+    }
+
 
     const state = {
         loading,
@@ -102,7 +112,8 @@ const PostsProvider = ({ children }) => {
         deletePost,
         onChangeText,
         like,
-        unlike
+        unlike,
+        compareIdToCurrentUser
     }
 
     return <Provider value={{ ...state, ...actions }} >{children}</Provider>

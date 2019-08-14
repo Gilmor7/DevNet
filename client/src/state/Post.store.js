@@ -1,5 +1,7 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import { getPostById, createComment, deleteComment } from '../services/postServices';
+
+import { AuthContext } from './GlobalAuthContext';
 
 const PostStore = createContext();
 const { Provider } = PostStore;
@@ -17,6 +19,9 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
     const [text, set_text] = useState("")
     const [err, set_err] = useState({})
 
+    //get payload from current user data
+    const { id: currentUserId, name, avatar } = useContext(AuthContext).user;
+
     //function that gets the post from DB
     const getPost = id => {
         set_loading(true)
@@ -33,7 +38,7 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
     // Set the effects 
     useEffect(() => {
         getPost(post_id);
-    })
+    }, [])
 
 
     //  Set the action to distribute
@@ -42,7 +47,7 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
     }
 
 
-    const addComment = (e, name, avatar) => {
+    const addComment = e => {
         e.preventDefault()
 
         createComment(post_id, {

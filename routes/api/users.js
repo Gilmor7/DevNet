@@ -81,12 +81,6 @@ router.post('/login', raw(async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
-        // const false_response = {
-        //     auth: false,
-        //     token: null,
-        //     msg: 'Token is not valid'
-        // }
-
         //check if user email does not exist
         if (!user) {
             return res.status(404).json({

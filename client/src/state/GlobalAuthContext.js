@@ -44,8 +44,7 @@ const AuthContextProvider = ({ children }) => {
                     set_current_user({});
                 })
                 .catch(err => {
-                    throw new Error(err.response.data);
-                    //redirect to not fond
+                    //redirect to error page
                 })
         }
     }
