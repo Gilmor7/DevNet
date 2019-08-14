@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
+// import { Redirect } from 'react-router-dom'
+
 
 import {
     createNewPost,
@@ -14,7 +16,7 @@ const FeedStore = React.createContext();
 const { Provider } = FeedStore;
 
 
-const PostsProvider = ({ children }) => {
+const PostsProvider = ({ children, history }) => {
     // Set the feed state
     const [posts, set_posts] = useState([]);
     const [loading, set_loading] = useState(false);
@@ -36,24 +38,23 @@ const PostsProvider = ({ children }) => {
         getAllPosts()
             .then(res => {
                 set_loading(false);
-                set_posts(res.data);
+                set_posts(res.data.reverse()); //reverse the array so we will see the most new one on top 
             })
             .catch(err => {
                 set_loading(false);
-                // if no posts a message will be shown 
+                // if no posts the posts state will be empty array and a message will be shown 
             })
     }
 
 
     // Set the effects
     useEffect(() => {
-        getPosts()
+        getPosts()  //when component did mount the fetch will be execute
     }, [])
 
 
 
     // Set the actions
-
     const onChangeText = e => {
         set_text(e.target.value)
     }
@@ -61,8 +62,6 @@ const PostsProvider = ({ children }) => {
 
     const createPost = e => {
         e.preventDefault()
-        console.log(avatar)
-        console.log(name)
         createNewPost({
             text,
             name,
@@ -70,30 +69,45 @@ const PostsProvider = ({ children }) => {
         })
             .then(res => {
                 set_text("");
-                set_err({});//just to make a re render 
-                getPosts()
+                set_err({});
+                set_posts([res.data, ...posts])
             })
-            .catch(err => set_err(err.response.data))
+            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
     }
 
 
     const deletePost = postId => {
         deletePostById(postId)
-            .then(res => getPosts())
-            .catch(err => console.log(err.response.data))
+            .then(res => {
+                set_posts(posts.filter(post => post._id !== postId))
+            })
+            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
     }
 
     const like = postId => {
         likePost(postId)
-            .then(res => getPosts())
-            .catch(err => console.log(err.response.data))
+            .then(res => {
+                set_posts(posts.map(post => {
+                    if (post._id === postId) {
+                        return res.data; //returned from server the updated post 
+                    }
+                }))
+            })
+            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
     }
 
     const unlike = postId => {
         dislikePost(postId)
-            .then(res => getPosts())
-            .catch(err => console.log(err.response.data))
+            .then(res => {
+                set_posts(posts.map(post => {
+                    if (post._id === postId) {
+                        return res.data; //returned from server the updated post 
+                    }
+                }))
+            })
+            .catch(err => err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
     }
+
 
     const compareIdToCurrentUser = userId => {  //userId == post.user / like.user
         return userId === currentUserId;

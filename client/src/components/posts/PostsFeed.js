@@ -19,6 +19,7 @@ const PostsFeed = () => {
             const IsPostOwner = compareIdToCurrentUser(post.user) //boolean - is the user is post Owner?
             const disableLike = likes.map(like => like.user)
                 .filter(userId => compareIdToCurrentUser(userId));
+
             return (
                 <PostView
                     key={post._id}
@@ -49,8 +50,8 @@ const PostsFeed = () => {
     )
 }
 
-const connected = () => (
-    <PostsProvider>
+const connected = props => (
+    <PostsProvider {...props}>
         <PostsFeed />
     </PostsProvider>
 )

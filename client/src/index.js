@@ -22,6 +22,7 @@ import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/create-profile/AddExperience';
 import AddEducation from './components/create-profile/AddEducation';
 import PrivateRoute from './components/common/PrivateRoute';
+import ErrorMessage from './components/common/ErrorMessage';
 
 import './styles.css';
 
@@ -48,6 +49,7 @@ function App() {
             <PrivateRoute path="/edit-profile" exact component={EditProfile} />
             <PrivateRoute path="/add-experience" exact component={AddExperience} />
             <PrivateRoute path="/add-education" exact component={AddEducation} />
+            <Route path="/error-page" exact component={ErrorMessage} />
           </div>
           <Footer />
         </AuthContextProvider>
