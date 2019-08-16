@@ -12,7 +12,7 @@ import Spinner from '../view/Spinner';
 
 const Post = () => {
 
-    const { postData, loading } = useContext(PostStore);
+    const { postData, loading, deleteAuthorization, removeComment } = useContext(PostStore);
 
     let content = null;
 
@@ -23,9 +23,15 @@ const Post = () => {
     }
     else content = (
         <React.Fragment>
-            <PostItem {...postData} />
+            <PostItem {...postData} isPost={true} />
+            <hr className="p-0.5 bg-secondary" />
+            {postData.comments.length > 0 &&
+                <CommentsFeed
+                    comments={postData.comments}
+                    deleteAuthCheck={deleteAuthorization}
+                    deleteComment={removeComment}
+                />}
             <AddComment />
-            {postData.comments.length > 0 && <CommentsFeed comments={postData.comments} />}
         </React.Fragment>
     )
 

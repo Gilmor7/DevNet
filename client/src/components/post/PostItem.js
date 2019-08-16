@@ -1,24 +1,34 @@
 import React from 'react'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
 
-const PostItem = ({ name, avatar, text }) => {
+const PostItem = ({ name, avatar, text, isPost, deleteAuthorized, onDelete }) => {
     return (
-        <div className="card card-body mb-3">
+        <div className={classnames("card card-body mb-3", {
+            'bg-info text-white': isPost
+        })}>
             <div className="row">
                 <div className="col-md-2">
-                    {/* <a href="profile.html"> */}
+
                     <img
                         src={avatar}
                         alt=""
                         className="rounded-circle d-none d-md-block"
                     />
-                    {/* </a> */}
+
                     <br />
                     <p className="text-center">{name}</p>
                 </div>
                 <div className="col-md-10">
                     <p className="lead">{text}</p>
+
+                    {deleteAuthorized &&
+                        <button
+                            className="btn btn-danger"
+                            onClick={onDelete}
+                        >Delete</button>}
+
                 </div>
             </div>
         </div>

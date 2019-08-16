@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
 
 import { PostStore } from '../../state/Post.store';
 
@@ -34,9 +33,5 @@ const AddComment = () => {
     )
 }
 
-AddComment.propTypes = {
-    name: PropTypes.string.isRequired,
-    avatar: PropTypes.string.isRequired
-}
 
 export default AddComment

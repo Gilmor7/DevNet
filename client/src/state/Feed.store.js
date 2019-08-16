@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-// import { Redirect } from 'react-router-dom'
-
 
 import {
     createNewPost,
@@ -20,10 +18,6 @@ const PostsProvider = ({ children, history }) => {
     // Set the feed state
     const [posts, set_posts] = useState([]);
     const [loading, set_loading] = useState(false);
-    // const [likeObj, set_likeObj] = useState({
-    //     disableLike: false,
-    //     disableUnlike: true
-    // })
 
     // Create post state
     const [text, set_text] = useState("");
@@ -51,7 +45,6 @@ const PostsProvider = ({ children, history }) => {
     useEffect(() => {
         getPosts()  //when component did mount the fetch will be execute
     }, [])
-
 
 
     // Set the actions
@@ -105,7 +98,7 @@ const PostsProvider = ({ children, history }) => {
                     }
                 }))
             })
-            .catch(err => err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
+            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
     }
 
 

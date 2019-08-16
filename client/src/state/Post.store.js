@@ -41,7 +41,8 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
     }, [])
 
 
-    //  Set the action to distribute
+    //  Set the actions to distribute
+
     const onChangeText = e => {
         set_text(e.target.value)
     }
@@ -58,9 +59,28 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
             .then(res => {
                 set_text("");
                 set_err({});
-                getPost(post_id) //cause re render
+                set_postData(res.data)
             })
             .catch(err => set_err(err.response.data))
+    }
+
+    const removeComment = commentId => {
+        deleteComment(post_id, commentId)
+            .then(res => {
+                set_postData(res.data)
+            })
+            .catch(err => set_err({ delete: 'Something Went Wrong, try again later' }))
+
+    }
+
+    //check if current user authorized to delete comment (only post owner or comment owner)
+    const deleteAuthorization = commentOwnerId => {
+        if (postData.user === currentUserId) {
+            return true;
+        } else if (commentOwnerId === currentUserId) {
+            return true;
+        }
+        else return false;
     }
 
     // Organize the state and actions 
@@ -73,7 +93,9 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
 
     const actions = {
         onChangeText,
-        addComment
+        addComment,
+        removeComment,
+        deleteAuthorization
     }
 
     return <Provider value={{ ...state, ...actions }}> {children} </Provider>
