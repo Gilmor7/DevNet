@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const db = require('./db/mongoose.connection');
 const bodyParser = require('body-parser');

@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
+const { NODE_ENV, ATLAS_URI } = process.env
+let uri;
 
-const uri = `mongodb+srv://gilmor7:blitz0549409597@gmcluster-wmkj2.mongodb.net/test?retryWrites=true&w=majority`;
+if (NODE_ENV === 'development') {
+    const { DB_HOST, DB_PORT, DB_NAME } = process.env;
+    uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
+}
+else uri = ATLAS_URI;
 
 const options = {
     useNewUrlParser: true,

@@ -1,13 +1,19 @@
-import React, { useContext } from 'react';
-
-import { FeedStore } from '../../state/Feed.store';
+import React, { useState } from 'react';
 
 import isEmpty from '../../utils/isEmpty'
 
 import TextAreaField from '../view/TextAreaField';
 
-const CreatePost = () => {
-    const { createPost, onChangeText, err, text } = useContext(FeedStore);
+const CreatePost = ({ createPost }) => {
+    const [text, set_text] = useState('');
+    const [err, set_err] = useState({});
+
+    const onChangeText = e => {
+        set_text(e.target.value);
+    }
+    const clearText = () => {
+        set_text('');
+    }
 
     return (
         <div className="post-form mb-3">
@@ -16,7 +22,7 @@ const CreatePost = () => {
                     Say Somthing...
                  </div>
                 <div className="card-body">
-                    <form noValidate onSubmit={createPost}>
+                    <form noValidate onSubmit={e => createPost(e, text, clearText, set_err)}>
 
                         <TextAreaField
                             placeholder="Create a post"

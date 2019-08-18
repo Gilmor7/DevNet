@@ -53,8 +53,8 @@ const Post = () => {
 }
 
 
-const connected = ({ match }) => (
-    <PostProvider match={match}>
+const connected = props => (
+    <PostProvider {...props}>
         <Post />
     </PostProvider>
 )

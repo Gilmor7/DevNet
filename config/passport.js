@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('users');
 
 //get secret server key for jwt
-const { APP_SECRET } = require('./keys');
+const { APP_SECRET } = process.env
 
 const opt = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

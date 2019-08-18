@@ -1,39 +1,26 @@
 import React, { useContext } from 'react';
 
-import PostView from './PostView';
 import Spinner from '../view/Spinner';
 import CreatePost from './CreatePost';
+import AllPosts from './AllPosts';
 
 import { FeedStore, PostsProvider } from '../../state/Feed.store';
 
 
 const PostsFeed = () => {
 
-    const { loading, posts, deletePost, like, unlike, compareIdToCurrentUser } = useContext(FeedStore);
+    const { createPost, loading, posts, deletePost, like, unlike, compareIdToCurrentUser } = useContext(FeedStore);
 
     let postsFeed = null;
 
     if (posts.length > 0) {
-        postsFeed = posts.map(post => {
-            const { likes, comments, ...copy } = post
-            const IsPostOwner = compareIdToCurrentUser(post.user) //boolean - is the user is post Owner?
-            const disableLike = likes.map(like => like.user)
-                .filter(userId => compareIdToCurrentUser(userId));
-
-            return (
-                <PostView
-                    key={post._id}
-                    likePost={() => like(post._id)}
-                    unlikePost={() => unlike(post._id)}
-                    numLikes={likes.length}
-                    {...copy}
-                    owner={IsPostOwner}
-                    onDelete={IsPostOwner ? () => deletePost(post._id) : null}
-                    disableLike={disableLike.length > 0}
-                />
-            )
-
-        })
+        postsFeed = <AllPosts
+            postsArr={posts}
+            deletePost={deletePost}
+            like={like}
+            unlike={unlike}
+            compareIdToCurrentUser={compareIdToCurrentUser}
+        />
     }
     else postsFeed = <p> No Posts Found </p>;
 
@@ -42,7 +29,7 @@ const PostsFeed = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-12">
-                    <CreatePost />
+                    <CreatePost createPost={createPost} />
                     {!loading ? postsFeed : <Spinner />}
                 </div>
             </div>

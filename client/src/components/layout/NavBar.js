@@ -13,7 +13,7 @@ function NavBar() {
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
             <div className="container">
-                <Link to="/" className="navbar-brand">DevConnector</Link>
+                <Link to="/" className="navbar-brand">DevNet</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
                     <span className="navbar-toggler-icon"></span>
                 </button>

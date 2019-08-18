@@ -1,6 +1,11 @@
+body {
+  font-family: "Palatino Linotype, Book Antiqua, Palatino, serif";
+  color: #2e2e2e;
+}
+
 .landing {
   position: relative;
-  background: url("./img/showcase.jpg") no-repeat;
+  background: url("./img/showcase2.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;

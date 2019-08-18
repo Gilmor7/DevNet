@@ -19,10 +19,6 @@ const PostsProvider = ({ children, history }) => {
     const [posts, set_posts] = useState([]);
     const [loading, set_loading] = useState(false);
 
-    // Create post state
-    const [text, set_text] = useState("");
-    const [err, set_err] = useState({});
-
     //get user avatar and name from user info
     const { id: currentUserId, name, avatar } = useContext(AuthContext).user;
 
@@ -48,12 +44,8 @@ const PostsProvider = ({ children, history }) => {
 
 
     // Set the actions
-    const onChangeText = e => {
-        set_text(e.target.value)
-    }
 
-
-    const createPost = e => {
+    const createPost = (e, text, clearText, set_err) => {
         e.preventDefault()
         createNewPost({
             text,
@@ -61,11 +53,11 @@ const PostsProvider = ({ children, history }) => {
             avatar
         })
             .then(res => {
-                set_text("");
                 set_err({});
+                clearText();
                 set_posts([res.data, ...posts])
             })
-            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
+            .catch(err => set_err(err.response.data))
     }
 
 
@@ -74,31 +66,23 @@ const PostsProvider = ({ children, history }) => {
             .then(res => {
                 set_posts(posts.filter(post => post._id !== postId))
             })
-            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
+            .catch(err => history.push(`/error-page`))
     }
 
-    const like = postId => {
+    const like = (postId, setLikeState) => {
         likePost(postId)
             .then(res => {
-                set_posts(posts.map(post => {
-                    if (post._id === postId) {
-                        return res.data; //returned from server the updated post 
-                    }
-                }))
+                setLikeState()
             })
-            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
+            .catch(err => history.push(`/error-page`))
     }
 
-    const unlike = postId => {
+    const unlike = (postId, setLikeState) => {
         dislikePost(postId)
             .then(res => {
-                set_posts(posts.map(post => {
-                    if (post._id === postId) {
-                        return res.data; //returned from server the updated post 
-                    }
-                }))
+                setLikeState()
             })
-            .catch(err => history.push(`/error-page/${err.response.data.message || 'Internal server error'}`))
+            .catch(err => history.push(`/error-page`))
     }
 
 
@@ -109,15 +93,12 @@ const PostsProvider = ({ children, history }) => {
 
     const state = {
         loading,
-        posts,
-        text,
-        err
+        posts
     }
 
     const actions = {
         createPost,
         deletePost,
-        onChangeText,
         like,
         unlike,
         compareIdToCurrentUser

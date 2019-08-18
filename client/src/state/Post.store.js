@@ -7,7 +7,7 @@ const PostStore = createContext();
 const { Provider } = PostStore;
 
 
-const PostProvider = ({ children, match }) => { //get the match as a prop from router
+const PostProvider = ({ children, match, history }) => { //get the match as a prop from router
     //destructure the postId from the params object that we get by react router 
     const { post_id } = match.params;
 
@@ -69,7 +69,9 @@ const PostProvider = ({ children, match }) => { //get the match as a prop from r
             .then(res => {
                 set_postData(res.data)
             })
-            .catch(err => set_err({ delete: 'Something Went Wrong, try again later' }))
+            .catch(err => {
+                history.push(`/error-page/${err.response.data.message || 'Internal server error'}`)
+            })
 
     }
 
