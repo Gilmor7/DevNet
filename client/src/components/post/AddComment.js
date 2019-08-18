@@ -1,21 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react';
 
-import { PostStore } from '../../state/Post.store';
+import TextAreaField from '../view/TextAreaField';
 
-import TextAreaField from '../view/TextAreaField'
+const AddComment = ({ AddNewComment }) => {
 
-const AddComment = () => {
+    const [text, set_text] = useState('');
+    const [err, set_err] = useState({});
 
-    const { text, err, onChangeText, addComment } = useContext(PostStore)
+    const onChangeText = e => {
+        set_text(e.target.value);
+    }
+
+    const clearText = () => {
+        set_text('');
+    }
 
     return (
         <div className="post-form mb-3">
-            <div className="card card-info">
+            <div className="card card-dark">
                 <div className="card-header bg-info text-white">
                     Say Somthing...
 </div>
                 <div className="card-body">
-                    <form noValidate onSubmit={addComment}>
+                    <form noValidate onSubmit={e => AddNewComment(e, clearText, set_err, text)}>
                         <div className="form-group">
                             <TextAreaField
                                 name="text"
@@ -34,4 +41,4 @@ const AddComment = () => {
 }
 
 
-export default AddComment
+export default AddComment;

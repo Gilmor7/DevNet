@@ -15,10 +15,6 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
     const [postData, set_postData] = useState({})
     const [loading, set_loading] = useState(false)
 
-    // Set the data for addComment component
-    const [text, set_text] = useState("")
-    const [err, set_err] = useState({})
-
     //get payload from current user data
     const { id: currentUserId, name, avatar } = useContext(AuthContext).user;
 
@@ -43,12 +39,7 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
 
     //  Set the actions to distribute
 
-    const onChangeText = e => {
-        set_text(e.target.value)
-    }
-
-
-    const addComment = e => {
+    const addComment = (e, clearText, set_err, text) => {
         e.preventDefault()
 
         createComment(post_id, {
@@ -57,7 +48,7 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
             avatar
         })
             .then(res => {
-                set_text("");
+                clearText();
                 set_err({});
                 set_postData(res.data)
             })
@@ -88,13 +79,10 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
     // Organize the state and actions 
     const state = {
         postData,
-        loading,
-        text,
-        err
+        loading
     }
 
     const actions = {
-        onChangeText,
         addComment,
         removeComment,
         deleteAuthorization

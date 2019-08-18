@@ -1,0 +1,24 @@
+{
+    "name": "DevNet Api",
+    "version": 2,
+    "builds": [
+        {
+            "src": "*.js",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/posts",
+            "dest": "./routes/posts.js"
+        },
+        {
+            "src": "/api/profile",
+            "dest": "./routes/profile.js"
+        },
+        {
+            "src": "/api/users",
+            "dest": "./routes/users.js"
+        }
+    ]
+}

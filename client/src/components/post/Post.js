@@ -12,7 +12,7 @@ import Spinner from '../view/Spinner';
 
 const Post = () => {
 
-    const { postData, loading, deleteAuthorization, removeComment } = useContext(PostStore);
+    const { postData, loading, deleteAuthorization, removeComment, addComment } = useContext(PostStore);
 
     let content = null;
 
@@ -31,7 +31,7 @@ const Post = () => {
                     deleteAuthCheck={deleteAuthorization}
                     deleteComment={removeComment}
                 />}
-            <AddComment />
+            <AddComment AddNewComment={addComment} />
         </React.Fragment>
     )
 
