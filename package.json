@@ -8,7 +8,8 @@
     "start": "node local-server.js",
     "server": "nodemon local-server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" "
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "deploy": "now"
   },
   "keywords": [],
   "author": "Gil Morhaim",
@@ -28,6 +29,7 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "now": "^16.1.1"
   }
 }

@@ -1,4 +1,5 @@
 now.json
-./client
+/client
 .env
 devconnector-api.postman_collection.json
+package-lock.json
