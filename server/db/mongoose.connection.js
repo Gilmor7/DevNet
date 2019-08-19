@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const { NODE_ENV, ATLAS_URI } = process.env
+const { NODE_ENV, REMOTE_DB } = process.env
 let uri;
 
 if (NODE_ENV === 'development') {
     const { DB_HOST, DB_PORT, DB_NAME } = process.env;
     uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 }
-else uri = ATLAS_URI;
+else uri = REMOTE_DB;
 
 const options = {
     useNewUrlParser: true,
@@ -23,9 +23,13 @@ const options = {
     family: 4 // Use IPv4, skip trying IPv6
 };
 
+let instance;
+
 const connect = async () => {
-    await mongoose.connect(uri, options);
-    console.log('mongoDB is connected');
+    if (!instance) {
+        instance = await mongoose.connect(uri, options);
+        console.log('mongoDB is connected');
+    }
 }
 
 module.exports = { connect };

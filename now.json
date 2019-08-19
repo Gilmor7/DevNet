@@ -3,22 +3,30 @@
     "version": 2,
     "builds": [
         {
-            "src": "*.js",
+            "src": "server/**/*.js",
             "use": "@now/node"
         }
     ],
     "routes": [
         {
-            "src": "/api/posts",
-            "dest": "./routes/posts.js"
-        },
-        {
-            "src": "/api/profile",
-            "dest": "./routes/profile.js"
-        },
-        {
-            "src": "/api/users",
-            "dest": "./routes/users.js"
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS",
+                "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+            },
+            "src": "/(.*)",
+            "dest": "server/server.js"
         }
+    ],
+    "env": {
+        "NODE_ENV": "staging",
+        "DB_REMOTE": "mongodb+srv://gilmor7:blitz0549409597@gmcluster-wmkj2.mongodb.net/test?retryWrites=true&w=majority",
+        "APP_SECRET": "secretKeyForJWT",
+        "TOKEN_EXPIRY": 3600
+    },
+    "regions": [
+        "dub1",
+        "lhr1",
+        "cdg1"
     ]
 }

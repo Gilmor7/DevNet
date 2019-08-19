@@ -8,7 +8,6 @@ const error_handler = (err, req, res, next) => {
     }
     else res.status(500).json({ status: 'internal server error...' });
 
-    // if(NODE_ENV === 'development')res.status(500).json({status:err.message,stack:err.stack});
 
 }
 
