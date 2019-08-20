@@ -12,7 +12,7 @@ const CommentsFeed = ({ comments, deleteAuthCheck, deleteComment }) => {
                         key={com._id}
                         {...com}
                         deleteAuthorized={deleteAuthCheck(com.user)}
-                        onDelete={() => deleteComment(com._id)}
+                        onDelete={deleteComment}
                     />
                 ))
             }

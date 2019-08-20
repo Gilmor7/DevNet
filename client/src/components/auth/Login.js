@@ -5,6 +5,7 @@ import { LoginProvider, LoginStore } from '../../state/Login.store';
 import { AuthContext } from '../../state/GlobalAuthContext';
 
 import TextFieldGroup from '../view/TextFieldGroup';
+import SpinnerSmall from '../view/SpinnerSmall';
 
 
 const Login = ({ history }) => {
@@ -13,6 +14,7 @@ const Login = ({ history }) => {
         email,
         password,
         errors,
+        loading,
         on_submit,
         on_change
     } = useContext(LoginStore);
@@ -62,7 +64,7 @@ const Login = ({ history }) => {
                                 errorIsJoi={errors.isJoi}
                             />
 
-                            <input type="submit" className="btn btn-info btn-block mt-4" />
+                            {loading ? <SpinnerSmall /> : <input type="submit" className="btn btn-info btn-block mt-4" />}
                         </form>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import { RegisterProvider, RegisterStore } from '../../state/Register.store';
 import { AuthContext } from '../../state/GlobalAuthContext';
 
 import TextFieldGroup from '../view/TextFieldGroup';
+import SpinnerSmall from '../view/SpinnerSmall';
 
 const Register = ({ history }) => {
     // Get the data from register store
@@ -14,7 +15,8 @@ const Register = ({ history }) => {
         password2,
         errors,
         on_submit,
-        on_change
+        on_change,
+        loading
     } = useContext(RegisterStore);
 
     const { isAuthenticated } = useContext(AuthContext);
@@ -89,7 +91,7 @@ const Register = ({ history }) => {
                                 error={password2Error}
                             />
 
-                            <input type="submit" className="btn btn-info btn-block mt-4" />
+                            {loading ? <SpinnerSmall /> : <input type="submit" className="btn btn-info btn-block mt-4" />}
                         </form>
                     </div>
                 </div>

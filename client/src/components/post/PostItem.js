@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import SpinnerSmall from '../view/SpinnerSmall';
 
 
-const PostItem = ({ name, avatar, text, isPost, deleteAuthorized, onDelete }) => {
+const PostItem = ({ name, avatar, text, isPost, _id, deleteAuthorized, onDelete }) => {
+
+    const [loading, set_loading] = useState(false);
+
     return (
         <div className={classnames("card card-body mb-3", {
             'bg-info text-white': isPost
@@ -26,9 +30,9 @@ const PostItem = ({ name, avatar, text, isPost, deleteAuthorized, onDelete }) =>
                     {deleteAuthorized &&
                         <button
                             className="btn btn-danger"
-                            onClick={onDelete}
+                            onClick={() => onDelete(_id, set_loading)}
                         >Delete</button>}
-
+                    {loading ? <SpinnerSmall /> : null}
                 </div>
             </div>
         </div>

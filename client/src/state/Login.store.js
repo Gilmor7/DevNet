@@ -18,17 +18,20 @@ const LoginProvider = ({ children }) => {
         password: ''
     });
     const [errors, set_errors] = useState({});
+    const [loading, set_loading] = useState(false);
 
     // Set the actions we want to expose to the register component
     const on_change = e => {
         set_fields({
             ...fields,
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     const on_submit = (e, history) => {
         e.preventDefault();
+
+        set_loading(true);
 
         loginUser({ ...fields })
             .then(res => {
@@ -45,16 +48,18 @@ const LoginProvider = ({ children }) => {
                 history.push('/dashboard');
             })
             .catch(err => {
-                if (err.response.data.isJoi) {
-                    set_errors({ ...err.response.data })
+                set_loading(false);
+                if (err.response.data.email || err.response.data.password) {
+                    set_errors({ ...err.response.data });
                 }
-                else (history.push('/error-page'))
+                else (history.push('/error-page'));
             });
     }
 
     const state = {
         ...fields,
-        errors
+        errors,
+        loading
     }
 
     const actions = {

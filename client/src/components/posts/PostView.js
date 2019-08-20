@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 import PropTypes from 'prop-types';
+import SpinnerSmall from '../view/SpinnerSmall';
 
 const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, likePost, unlikePost, disableLike }) => {
 
@@ -10,6 +11,10 @@ const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, 
         liked: disableLike,
         num: numLikes
     })
+
+    const [loading, set_loading] = useState(false)
+
+
 
     const likeToPost = () => {
         set_likeState({
@@ -56,9 +61,10 @@ const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, 
                    </Link>
                     {owner && <button
                         type="button"
-                        onClick={onDelete}
+                        onClick={() => onDelete(_id, set_loading)}
                         className="btn btn-danger mr-1">
                         Delete </button>}
+                    {loading ? <SpinnerSmall /> : null}
 
                 </div>
             </div>

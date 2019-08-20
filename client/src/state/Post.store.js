@@ -55,9 +55,12 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
             .catch(err => set_err(err.response.data))
     }
 
-    const removeComment = commentId => {
+    const removeComment = (commentId, loading) => {
+        loading(true)
+
         deleteComment(post_id, commentId)
             .then(res => {
+                loading(false)
                 set_postData(res.data)
             })
             .catch(err => {

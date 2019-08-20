@@ -26,7 +26,7 @@ const AllPosts = ({ postsArr, like, unlike, deletePost, compareIdToCurrentUser }
                     numLikes={likes.length}
                     {...copy}
                     owner={IsPostOwner}
-                    onDelete={IsPostOwner ? () => deletePost(post._id) : null}
+                    onDelete={IsPostOwner ? deletePost : null}
                     disableLike={disableLike}
                 />
             )

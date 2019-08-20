@@ -61,9 +61,11 @@ const PostsProvider = ({ children, history }) => {
     }
 
 
-    const deletePost = postId => {
+    const deletePost = (postId, loading) => {
+        loading(true)
         deletePostById(postId)
             .then(res => {
+                loading(false)
                 set_posts(posts.filter(post => post._id !== postId))
             })
             .catch(err => history.push(`/error-page`))

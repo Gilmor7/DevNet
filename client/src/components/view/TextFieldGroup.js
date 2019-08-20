@@ -47,7 +47,10 @@ TextFieldGroup.propTypes = {
     placeholder: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     info: PropTypes.string,
-    error: PropTypes.string,
+    error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.bool
+    ]),
     disabled: PropTypes.bool,
     errorIsJoi: PropTypes.bool
 }

@@ -14,6 +14,7 @@ const RegisterProvider = ({ children }) => {
         password2: ''
     });
     const [errors, set_errors] = useState({});
+    const [loading, set_loading] = useState(false);
 
     // Set the actions we want to expose to the register component
     const on_change = e => {
@@ -25,23 +26,30 @@ const RegisterProvider = ({ children }) => {
 
     const on_submit = (history, e) => {
         e.preventDefault();
+        set_loading(true);
 
         const newUser = {
             ...fields
         }
 
         registerUser(newUser)
-            .then(res => history.push('/login'))
+            .then(res => {
+                history.push('/login')
+            })
             .catch(err => {
-                console.log(err.response.data)
-                set_errors({ ...err.response.data });
+                set_loading(false)
+                if (err.response.data.isJoi) {
+                    set_errors({ ...err.response.data });
+                }
+                else (history.push('/error-page'));
             })
 
     }
 
     const state = {
         ...fields,
-        errors
+        errors,
+        loading
     }
 
     const actions = {
