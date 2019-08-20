@@ -61,7 +61,7 @@ const PostProvider = ({ children, match, history }) => { //get the match as a pr
                 set_postData(res.data)
             })
             .catch(err => {
-                history.push(`/error-page/${err.response.data.message || 'Internal server error'}`)
+                history.push(`/error-page/`)
             })
 
     }

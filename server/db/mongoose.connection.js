@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const { NODE_ENV, REMOTE_DB } = process.env
+const { NODE_ENV, DB_REMOTE } = process.env
 let uri;
 
 if (NODE_ENV === 'development') {
     const { DB_HOST, DB_PORT, DB_NAME } = process.env;
     uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 }
-else uri = REMOTE_DB;
+else uri = DB_REMOTE;
 
 const options = {
     useNewUrlParser: true,

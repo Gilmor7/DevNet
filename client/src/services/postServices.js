@@ -11,15 +11,15 @@ export const createNewPost = newPost => {
 }
 
 export const deletePostById = postId => {
-    return axios.delete(`api/posts/${postId}`, postId);
+    return axios.delete(`api/posts/${postId}`);
 }
 
 export const likePost = postId => {
-    return axios.post(`api/posts/like/${postId}`, postId);
+    return axios.post(`api/posts/like/${postId}`);
 }
 
 export const dislikePost = postId => {
-    return axios.delete(`api/posts/unlike/${postId}`, postId);
+    return axios.delete(`api/posts/unlike/${postId}`);
 }
 
 

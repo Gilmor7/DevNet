@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import { ProfileProvider } from './state/Profile.store';
-import { AuthContextProvider } from './state/GlobalAuthContext';
+import { AuthContextProvider, AuthContext } from './state/GlobalAuthContext';
 
 
 import NavBar from './components/layout/NavBar';
@@ -26,38 +26,44 @@ import ErrorMessage from './components/common/ErrorMessage';
 
 import './styles.css';
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://devnetapi-981f6kmob.now.sh";
 
 
 function App() {
 
+  const { isAuthenticated } = useContext(AuthContext)
+
   return (
     <Router>
-      <ProfileProvider>
-        <AuthContextProvider>
-          <NavBar />
-          <Route path="/" exact component={Landing} />
-          <div className="container">
-            <Route path="/Login" exact component={Login} />
-            <Route path="/Register" exact component={Register} />
-            <Route path="/profiles" exact component={Developers} />
-            <Route path="/profile/:handle" exact component={ProfileView} />
-            <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <PrivateRoute path="/feed" exact component={PostsFeed} />
-            <PrivateRoute path="/post/:post_id" exact component={Post} />
-            <PrivateRoute path="/create-profile" exact component={CreateProfile} />
-            <PrivateRoute path="/edit-profile" exact component={EditProfile} />
-            <PrivateRoute path="/add-experience" exact component={AddExperience} />
-            <PrivateRoute path="/add-education" exact component={AddEducation} />
-            <Route path="/error-page" exact component={ErrorMessage} />
-          </div>
-          <Footer />
-        </AuthContextProvider>
-      </ProfileProvider>
+      <NavBar />
+      <Route path="/" exact render={() => isAuthenticated ? <Dashboard /> : <Landing />} />
+      <div className="container">
+        <Route path="/Login" exact component={Login} />
+        <Route path="/Register" exact component={Register} />
+        <Route path="/profiles" exact component={Developers} />
+        <Route path="/profile/:handle" exact component={ProfileView} />
+        <PrivateRoute path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/feed" exact component={PostsFeed} />
+        <PrivateRoute path="/post/:post_id" exact component={Post} />
+        <PrivateRoute path="/create-profile" exact component={CreateProfile} />
+        <PrivateRoute path="/edit-profile" exact component={EditProfile} />
+        <PrivateRoute path="/add-experience" exact component={AddExperience} />
+        <PrivateRoute path="/add-education" exact component={AddEducation} />
+        <Route path="/error-page" exact component={ErrorMessage} />
+      </div>
+      <Footer />
     </Router>
   );
 }
 
+const ConnectApp = () => (
+  <ProfileProvider>
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
+  </ProfileProvider>
+)
+
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<ConnectApp />, rootElement);

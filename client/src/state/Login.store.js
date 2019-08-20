@@ -45,7 +45,10 @@ const LoginProvider = ({ children }) => {
                 history.push('/dashboard');
             })
             .catch(err => {
-                set_errors({ ...err.response.data })
+                if (err.response.data.isJoi) {
+                    set_errors({ ...err.response.data })
+                }
+                else (history.push('/error-page'))
             });
     }
 
