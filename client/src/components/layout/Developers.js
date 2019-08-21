@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 
 import { profileStore } from '../../state/Profile.store';
 
+import Spinner from '../view/Spinner';
+
 const Developers = () => {
 
     const {
         profiles,
-        getProfiles
+        getProfiles,
+        profile_loading
     } = useContext(profileStore);
 
     useEffect(() => {
@@ -49,7 +52,8 @@ const Developers = () => {
             </div >
         ))
     }
-    else content = (<div>NO Profiles found</div>)
+    else if (profile_loading === true) content = <Spinner />;
+    else content = (<div>NO Profiles found</div>);
 
     return (
         <div className="container">

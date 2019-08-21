@@ -30,7 +30,7 @@ const ProfileGithub = ({ user }) => {
 
     let content = null;
 
-    if (repos) {
+    if (repos && repos.length > 0) {
         content = repos.map(repo => (
             <GitItem
                 key={repo.id}
@@ -39,11 +39,12 @@ const ProfileGithub = ({ user }) => {
         ));
     }
 
-    else if (err) content = (<h4 className="info text-center">{err}</h4>);
-    else content = (<h4 className="info text-center">Not Found</h4>);
+    else if (err) content = (<h4 className="info text-center">Something went wrong...</h4>);
+    else content = (<h4 className="info text-center">No repos were found</h4>);
 
     return (
         <div>
+
             <hr />
             <h3 className="mb-4">Latest Github Repos</h3>
             {loading ? <Spinner /> : content}
