@@ -1,13 +1,13 @@
 {
-  "name": "devconnector",
+  "name": "dev_net_server_api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm i --prefix client",
+    "client-install": "npm i --prefix ../client",
     "start": "node local-server.js",
     "server": "nodemon local-server.js",
-    "client": "npm start --prefix client",
+    "client": "npm start --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "deploy": "now"
   },

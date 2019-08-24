@@ -1,9 +1,6 @@
-const app = require('./server/server');
-const cors = require('cors');
-const { LOCAL_PORT } = process.env
+const app = require('./server');
+const { LOCAL_PORT } = process.env;
 
-// add CORS support to my server
-app.use(cors());
 
 // INITIALIZE SERVER AND DATABASE
 const init = async () => {

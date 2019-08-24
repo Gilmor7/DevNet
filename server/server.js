@@ -1,7 +1,7 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
 
 
 const { NODE_ENV } = process.env;
@@ -18,6 +18,8 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 
 const app = express();
+
+app.use(cors());
 
 //body-parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
