@@ -4,7 +4,7 @@
 
 DevNet is a Developers social network.
 
-Link: https://hungry-volhard-95003b.netlify.com/
+Link: https://hungry-shannon-97b0b0.netlify.com
 
 The client side deployed with netlify.
 The server side deployed with ZEIT Now.
@@ -50,9 +50,7 @@ NODE_ENV=development
 DB_HOST=localhost
 DB_PORT=27017
 DB_NAME=devnet
-
 LOCAL_PORT=5000
-
 APP_SECRET=YOUR_SECRET_KEY_FOR_SERVER
 TOKEN_EXPIRY=3600
 
