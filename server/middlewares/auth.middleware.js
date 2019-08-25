@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { APP_SECRET, TOKEN_EXPIRY } = process.env
+const { APP_SECRET, TOKEN_EXPIRY } = require('../config/keys');
 
 const false_response = {
     auth: false,

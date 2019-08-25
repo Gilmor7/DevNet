@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
 
-
 const { NODE_ENV } = process.env;
+
 if (!(NODE_ENV && NODE_ENV === 'staging')) {
     require('dotenv').config()
 }
