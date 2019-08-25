@@ -26,8 +26,9 @@ import ErrorMessage from './components/common/ErrorMessage';
 
 import './styles.css';
 
-axios.defaults.baseURL = "https://devnetapi-709z1n92b.now.sh/"
-// "http://localhost:5000";
+axios.defaults.baseURL = "https://devnetapi-cesdiv3gb.now.sh";
+// "http://localhost:5000"
+
 
 
 function App() {

@@ -29,7 +29,8 @@ const RegisterProvider = ({ children }) => {
         set_loading(true);
 
         const newUser = {
-            ...fields
+            ...fields,
+            email: fields.email.toLowerCase()
         }
 
         registerUser(newUser)

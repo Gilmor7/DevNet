@@ -45,7 +45,7 @@ const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, 
                         onClick={() => likePost(_id, likeToPost)}
                         disabled={likeState.liked}
                         type="button"
-                        className="btn btn-light mr-1">
+                        className="btn btn-light mr-1 mb-2">
                         <i className="text-info fas fa-thumbs-up"></i>
                         {likeState.num > 0 && <span className="badge badge-light">{likeState.num}</span>}
                     </button>
@@ -53,7 +53,7 @@ const PostView = ({ text, avatar, numLikes, name: author, _id, owner, onDelete, 
                         onClick={() => unlikePost(_id, dislikeToPost)}
                         disabled={!likeState.liked}
                         type="button"
-                        className="btn btn-light mr-1">
+                        className="btn btn-light mr-1 mb-2">
                         <i className="text-secondary fas fa-thumbs-down"></i>
                     </button>
                     <Link to={`/post/${_id}`} className="btn btn-info mr-1">

@@ -1,4 +1,4 @@
 /node_modules
 package-lock.json
 devconnector-api.postman_collection.json
-/config/keys.js
+.env

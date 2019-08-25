@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const { NODE_ENV } = process.env;
-const { DB_REMOTE } = require('../config/keys');
-
+const { NODE_ENV, DB_REMOTE } = process.env;
 
 let uri;
 

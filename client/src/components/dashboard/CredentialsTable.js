@@ -17,7 +17,7 @@ const CredentialsTable = ({ credentials, topic, title1, title2, deleteCredential
                 <td>
                     <button
                         onClick={() => deleteCredential(crd._id)}
-                        className="btn btn-danger"> Delete </button>
+                        className="btn btn-danger"> <i className="fas fa-trash-alt" /> </button>
                 </td>
             </tr>
         )
